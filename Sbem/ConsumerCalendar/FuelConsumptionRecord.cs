@@ -5,7 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MeesSDK.Sbem
+namespace MeesSDK.Sbem.ConsumerCalendar
 {
 	/// <summary>
 	/// A record that represents a month in the Fuel Type consumption calendar.

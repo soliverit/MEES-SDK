@@ -15,14 +15,14 @@ using System.IO;
 using System.Linq;
 namespace MeesSDK.RsSAP
 {
-	public class RdSAPBuildingSet : IEnumerable<RdSAPBuilding>
+	public class RdSAPBuildingSet : IReadOnlyList<RdSAPBuilding>
 	{
-		public static string BEST_CHOICE				= "best_choice";
-		public static string CURRENT_ENERGY_EFFICIENCY	= "CURRENT_ENERGY_EFFICIENCY";
-		public static List<string> INT_KEYS				= new() { CURRENT_ENERGY_EFFICIENCY };
-
-		private readonly List<RdSAPBuilding> Buildings	= new();
-		public double Area								= 0.0;
+		public static string BEST_CHOICE						= "best_choice";
+		public static string CURRENT_ENERGY_EFFICIENCY			= "CURRENT_ENERGY_EFFICIENCY";
+		public static List<string> INT_KEYS						= new() { CURRENT_ENERGY_EFFICIENCY };
+		public int Count { get => Buildings.Count; }
+		protected List<RdSAPBuilding> Buildings { get; set; }	= new();
+		public double Area										= 0.0;
 
 		public static RdSAPBuildingSet LoadDataSet(string path, RdSAPReferenceDataSet? reference=null)
 		{
@@ -67,6 +67,19 @@ namespace MeesSDK.RsSAP
 			{
 				var building = new RdSAPBuilding(row);
 				set.Append(building);
+			}
+			return set;
+		}
+		public static RdSAPBuildingSet FromLinQ2DB(IQueryable<Depc> depcs)
+		{
+			return FromLinQ2DB(depcs.ToList());
+		}
+		public static RdSAPBuildingSet FromLinQ2DB(List<Depc> depcs)
+		{
+			RdSAPBuildingSet	set = new RdSAPBuildingSet();
+			for(int depcID = 0; depcID < depcs.Count; depcID++)
+			{
+
 			}
 			return set;
 		}
@@ -162,6 +175,14 @@ namespace MeesSDK.RsSAP
 				// use enumId here
 			}
 			return enumerated;
+		}
+		public void FilterCorrupt()
+		{
+			List<RdSAPBuilding> buildings = new List<RdSAPBuilding>();
+			for (int buildingID = 0; buildingID < Length; buildingID++)
+				if (!Buildings[buildingID].IsCorrupt)
+					buildings.Add(Buildings[buildingID]);
+			Buildings   = buildings;
 		}
 		//public void WriteFile(string path)
 		//{

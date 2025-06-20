@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace MeesSDK.Examples
 {
-	public class Retrofitting : IMeesSDKExample
+	public class RetrofittingWithSBEMExample : SbemExampleBase
 	{
-		public string Name { get; set; } = "EPC Lighting 5 - T8 lamp replacement";
-		public void DoTheExample(SbemProject project, SbemService sbem)
+		public RetrofittingWithSBEMExample(SbemProject project, SbemService service) : base(project, service) { }
+		public override void DoTheExample()
 		{
 			/* 
 			 * Once you've create your retrofit method, it's straightforward
@@ -22,11 +22,11 @@ namespace MeesSDK.Examples
 			 * NCMLighting5Example explains how retrofitting works
 			 */
 			// Create the Retrofit
-			NCMLighting5Example retrofit = new NCMLighting5Example(project.AsBuiltSbemModel);
+			NCMLighting5Example retrofit = new NCMLighting5Example(Project.AsBuiltSbemModel);
 			// Apply the retrofit
 			retrofit.Apply();
 			// Process and get the resulting SbemProject
-			SbemProject retrofittedProject = sbem.BuildProject(retrofit.Model);
+			SbemProject retrofittedProject = SbemHandler.BuildProject(retrofit.Model);
 			/*
 			 * The difference model(tm).
 			 * 
@@ -37,13 +37,13 @@ namespace MeesSDK.Examples
 			 * 
 			 * In a later example, we'll use this for occupancy correction.
 			 */
-			SbemModel differenceModel = project.AsBuiltSbemModel.GetDifferenceModel(retrofittedProject.AsBuiltSbemModel);
+			SbemModel differenceModel = Project.AsBuiltSbemModel.GetDifferenceModel(retrofittedProject.AsBuiltSbemModel);
 			// Print old and new End Use
-			project.AsBuiltSbemModel.EndUseConsumerCalendar.Print();
+			Project.AsBuiltSbemModel.EndUseConsumerCalendar.Print();
 			differenceModel.EndUseConsumerCalendar.Print();
 		}
 		//===================
-		public string GetDescription()
+		public override string GetDescription()
 		{
 			return @""" 
 Lighting Retrofit:

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MeesSDK.Sbem
+namespace MeesSDK.Sbem.ConsumerCalendar
 {
 	/// <summary>
 	/// A record that represents a month in the End Use energy consumption calendar.

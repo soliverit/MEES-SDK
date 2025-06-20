@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace MeesSDK.Examples
 {
-	public class ConsumptionDisaggregtionForZones : IMeesSDKExample
+	public class ConsumptionDisaggregtionForZones : SbemExampleBase
 	{
-		public void DoTheExample(SbemProject project, SbemService sbem)
+		public ConsumptionDisaggregtionForZones(SbemProject project, SbemService service) : base(project, service) { }
+		public override void DoTheExample()
 		{
 			/*
 			 * It's just two lines. What's happening under the hood?
@@ -21,14 +22,13 @@ namespace MeesSDK.Examples
 			 * Use and Fuel consmption calendars to the associated Zone in the input SbemModel
 			 */
 			// Disaggregate Hot Water to HVAC-level
-			SbemProject.DisaggregateHVACHotWater(project.AsBuiltSbemModel, sbem);
+			SbemProject.DisaggregateHVACHotWater(Project.AsBuiltSbemModel, SbemHandler);
 			// Disaggregate End Use and Fuel consumption to Zone-level
-			SbemProject.CalculateZonalEnergyDemand(project.AsBuiltSbemModel, sbem);
+			SbemProject.CalculateZonalEnergyDemand(Project.AsBuiltSbemModel, SbemHandler);
 		}
-		public string Name { get; set; } = "Disaggregating End Use and Fuel Type consumption to Zone-level";
-		public string GetDescription()
+		public override string GetDescription()
 		{
-			return @""" End Use and Fuel Type consumption disaagregation
+			return @""" Disaggregating End Use and Fuel Type consumption to Zone-level.
 
 SBEM doesn't calculate the HVAC-level Hot Water consumption because for its purpose, it doesn't 
 mean anything. Similarly, zones that contibute to Hot Water demand often don't consume themselves. This is why toilet-only

@@ -3,17 +3,26 @@ using GeneticSharp;
 using MathNet.Numerics.Optimization;
 using MeesSDK.Chromosome;
 using MeesSDK.DataManagement;
-using MeesSDK.ML;
-using MeesSDK.RdSAP;
-using MeesSDK.RdSAP.Reference;
-using MeesSDK.RsSAP;
+using MeesSDK.Examples;
+using MeesSDK.ML;	
 using MeesSDK.Sbem;
+using MeesSDK.Examples;
 using MeesSDK.Sbem.Retrofitting.Measures;
 using System.Diagnostics;
 /*
  *  Math.NET  
  */
 MathNet.Numerics.Control.UseNativeMKL();
+/*==== 
+ * Examples
+ ====*/
+/*
+ * RdSAP Estimation
+ */
+DEPCRatingEstimationWithLightGBMExample example	= new DEPCRatingEstimationWithLightGBMExample();
+example.DoTheExample();
+return;
+
 
 // Define locations
 string SBEM_DIRECTORY = "c:\\ncm\\6.1.e\\";

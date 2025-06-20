@@ -9,16 +9,15 @@ namespace MeesSDK.Examples
 {
 	public interface IMeesSDKExample
 	{
-		public string Name { get; set; }
 		public string GetDescription();
 		public void PrintDescription()
 		{
 			Console.WriteLine("\n====================================");
-			Console.WriteLine($"= MEES-SDK Example: {Name}");
+			Console.WriteLine($"MEES-SDK.\n");
 			Console.WriteLine(GetDescription());
 			Console.WriteLine("\n====================================");
 		}
-		public void DoTheExample(SbemProject project, SbemService sbem);
+		public void DoTheExample();
 		
 	}
 }

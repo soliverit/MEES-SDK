@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MeesSDK.Sbem
+namespace MeesSDK.Sbem.ConsumerCalendar
 {
 	/// <summary>
 	/// The base class for SBEM .sim output file Consumer Calendards. 

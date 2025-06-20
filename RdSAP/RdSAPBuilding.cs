@@ -459,7 +459,7 @@ namespace MeesSDK.RsSAP
 		/// <summary>
 		/// The ordinal efficieny label of the secondary heating system. E.g "Very poor", "poor",..., "Very good
 		/// </summary>
-		public string SecondaryHeatingEnergyEfficiencyLabel { get => DEPCRegisterData["SHEATING-ENERGY_EFF"]; }
+		public string SecondaryHeatingEnergyEfficiencyLabel { get => DEPCRegisterData["SHEATING_ENERGY_EFF"]; }
 		/// <summary>
 		/// Global unique identifier. Not entirely sure the scope since they appear outwith the Open Data Communites
 		/// portal like the Office for National Statistics data.
@@ -1331,7 +1331,7 @@ namespace MeesSDK.RsSAP
 			catch(Exception exception)
 			{
 				
-				CorruptMessage = "Something building just testing";
+				CorruptMessage = "Wall thickness lookup failure";
 				return;
 			}
 			// Walls U-Value stuff
@@ -1367,9 +1367,6 @@ namespace MeesSDK.RsSAP
 				WallUValue = WallConstructionData.BandValues[ConstructionAgeBand];
 			}
 			WindowTofloorRatio = WindowArea / TotalFloorArea;
-			// Thermal brdiging factor
-			ThermalBridgingData = reference.ThermalBrdige.BandsDictionary[ConstructionAgeBand];
-			ThermalBridgingFactor = ThermalBridgingData.Factor;
 			// Set the I've been done flag
 			HasExtendedProperties = true;
 		}

@@ -1,0 +1,113 @@
+﻿using MeesSDK.RdSAP.Reference;
+using MeesSDK.RsSAP;
+using MeesSDK.Sbem;
+using MeesSDK.ML;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MeesSDK.Examples
+{
+	public class DEPCRatingEstimationWithLightGBMExample : IMeesSDKExample
+	{
+		/// <summary>
+		/// Using the DEPC register and RdSAPBuilding extended features to create RdSAP estimators
+		/// </summary>
+		/// <param name="proejct"></param>
+		/// <param name="sbem"></param>
+		public void DoTheExample()
+		{
+			/*
+			 * Prepare the reference data used to extend the register's features. 
+			 * 
+			 * Reference data was created from Part L, NCM(SBEM) Database, and 
+			 * educated guesses.
+			 */
+			string DEPC_REFERENCE_PATH = "c://workspaces/depc_emulator/data/";
+			RdSAPReferenceDataSet reference = RdSAPReferenceDataSet.Build(
+				DEPC_REFERENCE_PATH + "age_band_lookup.csv",		// Primary key
+				DEPC_REFERENCE_PATH + "floor_constructions.csv",    // Floor U-Value
+				DEPC_REFERENCE_PATH + "glazing_types.csv",          // Windows U-Value
+				DEPC_REFERENCE_PATH + "heating_controls.csv",       // Heating controls
+				DEPC_REFERENCE_PATH + "roof_constructions.csv",     // Roof U-Value
+				DEPC_REFERENCE_PATH + "wall_constructions.csv",     // Wall U-Value
+				DEPC_REFERENCE_PATH + "wall_thickness.csv",         // Wall thicknes 
+				DEPC_REFERENCE_PATH + "window_parameters.csv"       // SAP window size built-form parameters
+			);
+			/*
+			 * Get the data
+			 * 
+			 * Download dataset from the OpenDataCommunities D-EPC register and set
+			 * the DEPC_REGISTER_DATA variable to the csv's path
+			 */
+			string DEPC_REGISTER_DATA = "C:\\workspaces\\__shared_data__\\depc\\domestic-E06000002-Middlesbrough\\certificates.csv";
+			// Load the D-EPC register certificates.csv. The constructor with reference tells it to add some properties like U-Values
+			RdSAPBuildingSet buildings = RdSAPBuildingSet.LoadDataSet(DEPC_REGISTER_DATA, reference);
+			// Remvoe corrupt and incomplete records
+			buildings.FilterCorrupt();
+			/*
+			 * Create a LightGBM estimator
+			 */
+			// Define the name of the RdSAPBuilding property that we're trying to estimate. 
+			string RDSAP_ESTIMATOR_TARGET_FEATURE = "DEPCEnergyEfficiency";
+			string[] RDSP_ESTIMATOR_FEATURES = new string[]
+			{
+				"ConstructionAgeIndexFloatForLightGBM",								// A to L as 0 to 10
+				"DEPCEnergyEfficiencyPotential"			,						// Potential energy efficiency
+				"ExtensionCountFloatForLightGBM",									// Nuber of extnsions
+				"NumberOfWetRoomsFloatForLightGBM",									// Number of wet rooms
+				"NumberOfOpenFireplacesFloatForLightGBM",							// Numer of open fireplaces
+				"HotWaterOrdinalEnergyEfficiencyFloatForLightGBM",					// Hot water system efficiency 0 - 5
+				//"FloorOrdinalEnergyEfficiencyFloatForLightGBM",						// Floor construction efficiency 0 - 5
+				"WindowsOrdinalEnergyEfficiencyFloatForLightGBM"					// Windows efficiency 0 - 5
+				//"WallsOrdinalEnergyEfficiencyFloatForLightGBM",						// External walls efficiency 0 - 5
+				//"HeatingOrdinalEnergyEfficiencyFloatForLightGBM",					// Main heating system efficiency 0 - 5
+				//"HeatingControlOrdinalEnergyEfficiencyFloatForLightGBM",			// Heating controls efficiency 0 - 5
+				//"RoofOrdinalEnergyEfficiencyFloatForLightGBM",						// Roof efficiency 0 - 5
+				//"LightingOrdinalEnergyEfficiencyFloatForLightGBM",					// Fixed lighting efficiency 0 - 5
+				//"LowEnergyLighting",												// Percent lighting is low energy
+				//"HeatingCostPotential",												// Heating cost potential determined by RdSAP
+				//"GlassUValue", "FloorUValue",  "RoofUValue",   "WallUValue",	// U-Values W/m²K
+				//"TotalFloorArea",													// Net internal area m²
+				//"WindowArea",														// Window area (Calculated by SAP, not from assessor	
+				//"SolarPanelArea",													// Solar panel area m²
+				//"MainFuelFactor"													// Main heating fuel kgCO2/m²
+			};
+			// Build a LightGBMEstimator-friendly dataset from the D-EPC certificates
+			LightGBMInputData<RdSAPBuilding> mlData = LightGBMInputData<RdSAPBuilding>.FromList(RDSP_ESTIMATOR_FEATURES, buildings);
+			// You can remove corrupt results from this data, too. Anything IValidatable (Thing that has a public HasError getter
+			mlData.RemoveCorruptObjects();
+			// Create the estimator
+			LightGBMEstimator<RdSAPBuilding> estimator = new LightGBMEstimator<RdSAPBuilding>(mlData, RDSAP_ESTIMATOR_TARGET_FEATURE);
+			// Configure the learner
+			estimator.LearningRate			= 0.075f;
+			estimator.NumberOfIterations    = 100;	
+			// Train it
+			estimator.Train();
+			// Print the results: A trained estimator's PrintSummary will include the Test Buildings RMSE
+			estimator.PrintSummary();
+		}
+
+
+
+		//============ Admin ============//
+		public string Name { get; set; } = "DEPC Estate Optimisation 1: Database interactions ";
+		public string GetDescription()
+		{
+			return @"""Estimating D-EPC ratings using Gradient-boosting decision trees
+
+We can make a reasonable guess at a of a D-EPC rating from the associated certificate's D-EPC register entry 
+and inference through RdSAPBuilding. 
+
+This exmaple demonstrates how to create a simple LightGBMEstimator D-EPC rating prediction.
+
+	To download your own example set visit: https://epc.opendatacommunities.org/domestic/search and use
+	any of the files named 'certificates.csv' E.g. ./domestic-E06000002-Middlesbrough/certificates.csv
+				""";
+		}
+	}
+}

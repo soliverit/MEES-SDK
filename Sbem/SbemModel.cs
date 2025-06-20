@@ -1,11 +1,5 @@
-// This is a port of the original SbemModel C++ class to C#
-using MathNet.Numerics;
 using MeesSDK.Sbem;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Security.Cryptography;
+using MeesSDK.Sbem.ConsumerCalendar;
 using System.Text;
 public class SbemModel : SbemModelBase
 {
@@ -334,41 +328,48 @@ AIR-CON-INSTALLED = No
 	/// <returns></returns>
 	public SbemModel Clone()
 	{
+		// Make sure we don't mess with the as-built model
 		SbemModel clone	= ParseInpContent(ToString());
+		// Do project-level End Use and Fuel Type calendars
 		if (EndUseConsumerCalendar != null)
 			clone.EndUseConsumerCalendar = EndUseConsumerCalendar.Clone();
 		if (FuelUseConsumerCalendar != null)
 			clone.FuelUseConsumerCalendar = FuelUseConsumerCalendar.Clone();
+
+		// Do all HVACS
 		for(int hvacID = 0; hvacID < HvacSystems.Length; hvacID++)
 		{
 			SbemHvacSystem hvacSystem	= HvacSystems[hvacID];
+			// Do HVAC End Use and Fuel Type calendars
 			if (hvacSystem.EndUseConsumerCalendar != null)
 				clone.HvacSystems[hvacID].SetEndUseConsumerCalendar(hvacSystem.EndUseConsumerCalendar.Clone());
 			if (hvacSystem.FuelUseConsumerCalendar != null)
 				clone.HvacSystems[hvacID].SetFuelTypConsumerCalendar(hvacSystem.FuelUseConsumerCalendar.Clone());
-			for(int zoneID = 0; zoneID < Zones.Length; zoneID++)
-			{
-				SbemZone zone = Zones[zoneID];
-				if (zone.HeatingEnergyDemandCalendar != null)
-					clone.Zones[zoneID].SetHeatingEnergyDemandCalendar(zone.HeatingEnergyDemandCalendar.Clone());
-				if(zone.CoolingEnergyDemandCalendar != null)
-					clone.Zones[zoneID].SetCoolingEnergyDemandCalendar(zone.CoolingEnergyDemandCalendar.Clone());
-				if(zone.InternalHeatGainsCalendar != null)
-					clone.Zones[zoneID].SetInternalGainsCalendar(zone.InternalHeatGainsCalendar.Clone());
-			}
 		}
-		Console.WriteLine("--- The prints ---");
-		foreach(SbemError e in Errors)
+		// Do all Zones
+		// NOTE: SbemModel has an SbemObjectSet<SbemZone> for convenience which is why we 
+		// can do this outside the HVAC loop.
+		for (int zoneID = 0; zoneID < Zones.Length; zoneID++)
 		{
-			Console.WriteLine($"Error: {e.Message}");
+			SbemZone zone = Zones[zoneID];
+			// Demand calendars
+			if (zone.HeatingEnergyDemandCalendar != null)
+				clone.Zones[zoneID].SetHeatingEnergyDemandCalendar(zone.HeatingEnergyDemandCalendar.Clone());
+			if (zone.CoolingEnergyDemandCalendar != null)
+				clone.Zones[zoneID].SetCoolingEnergyDemandCalendar(zone.CoolingEnergyDemandCalendar.Clone());
+			// Internal heat production calendar
+			if (zone.InternalHeatGainsCalendar != null)
+				clone.Zones[zoneID].SetInternalGainsCalendar(zone.InternalHeatGainsCalendar.Clone());
+			// End Use and Fuel Type calendars
+			if (zone.EndUseConsumerCalendar!= null)
+				clone.Zones[zoneID].SetEndUseConsumerCalendar(zone.EndUseConsumerCalendar.Clone());
+			if (zone.FuelUseConsumerCalendar!= null)
+				clone.Zones[zoneID].SetFuelUseConsumerCalendar(zone.FuelUseConsumerCalendar.Clone());
 		}
-		clone.FuelUseConsumerCalendar.Print();
-		clone.EndUseConsumerCalendar.Print();
 		return clone;
 	}
 	public void PrintHvacSystems(bool withZones)
-	{
-
+	{ 
 		List<List<string>> table = new List<List<string>>();
 		table.Add(new List<string>() { "Type", "Heat source", "Area (m²)", "SEFF", "SSEFF", "C-SEER", "C-SSEER", "SFP (W/m²)" });
 		foreach (SbemHvacSystem hvac in HvacSystems)

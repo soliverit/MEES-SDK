@@ -120,10 +120,14 @@ namespace MeesSDK.ML
 		}
 		public void Train()
 		{
+			Console.WriteLine("TODO: Remove PrintSummary() call from Train() of LightGBMEstimator");
+			PrintSummary();
 			Trained = true;
 
 			MLContextNET = new MLContext();
 			DataView = MLContextNET.Data.LoadFromEnumerable(Data.GetFirstRecords((int)(Data.Count * TrainTestSplit)));
+
+			MeesSDK.DataManagement.DataViewDumper.DumpToCsv(DataView, "c:/workspaces/__sandbox__/__temp_dump__/shoe.csv", MLContextNET, Data.Features);
 			// Prepare options
 			LightGbmRegressionTrainer.Options options  = new LightGbmRegressionTrainer.Options();
 			options.NumberOfIterations = NumberOfIterations;
@@ -132,19 +136,34 @@ namespace MeesSDK.ML
 			Pipeline = MLContextNET.Transforms
 				.Concatenate("Features", Data.Features) // ← dynamic feature column list
 				.Append(MLContextNET.Regression.Trainers.LightGbm(options));
+			Console.WriteLine($"The number of records: {DataView.GetRowCount()}");	
 			Transformer = Pipeline.Fit(DataView);
 		}
+		/// <summary>
+		/// Make predictions on the input samples where T is an IValidatable like RdSAPBuilding or SbemModel.
+		/// </summary>
+		/// <param name="inputs"></param>
+		/// <returns></returns>
 		public PredictionSet Predict(List<T> inputs)
 		{
 			IDataView inputObjectsView = MLContextNET.Data.LoadFromEnumerable(inputs);
 			IDataView predictions = Transformer.Transform(inputObjectsView);
 			return new PredictionSet(MLContextNET.Data.CreateEnumerable<LightGBMScore>(predictions, reuseRowObject: false).Select(p => p.Score).ToArray<float>());
 		}
+		/// <summary>
+		/// Make predictions on the input samples where T is an IValidatable like RdSAPBuilding or SbemModel.
+		/// </summary>
+		/// <param name="inputs"></param>
+		/// <returns></returns>
 		public PredictionSet Predict(IDataView inputObjectsView)
 		{
 			IDataView predictions = Transformer.Transform(inputObjectsView);
 			return new PredictionSet(MLContextNET.Data.CreateEnumerable<LightGBMScore>(predictions, reuseRowObject: false).Select(p => p.Score).ToArray<float>());
 		}
+		/// <summary>
+		/// Get the results in PredictionSet for the Test data. Determined by Data and TrainTestSpllit 
+		/// </summary>
+		/// <returns></returns>
 		public PredictionSet Test()
 		{
 			IDataView testData = TestData;
@@ -153,6 +172,9 @@ namespace MeesSDK.ML
 			predictions.SetTargets(targets);
 			return predictions;
 		}
+		/// <summary>
+		/// Print some information about the model. If trained, includes test data results
+		/// </summary>
 		public void PrintSummary()
 		{
 			Console.WriteLine("--- Data ---");

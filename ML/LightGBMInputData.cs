@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GeneticSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.AccessControl;
@@ -19,6 +20,13 @@ namespace MeesSDK.ML
 		public void AddObject(T obj)
 		{
 			Objects.Add(obj);
+		}
+		public static LightGBMInputData<T> FromList(string[] features, IReadOnlyList<T> list)
+		{
+			LightGBMInputData<T> data = new LightGBMInputData<T>(features);
+			for(int rowID = 0; rowID < list.Count; rowID++)	
+				data.AddObject(list[rowID]);
+			return data;
 		}
 		public void RemoveCorruptObjects()
 		{
