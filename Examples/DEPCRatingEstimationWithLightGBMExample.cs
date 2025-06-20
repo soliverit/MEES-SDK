@@ -50,17 +50,21 @@ namespace MeesSDK.Examples
 			// Remvoe corrupt and incomplete records
 			buildings.FilterCorrupt();
 			/*
-			 * Create a LightGBM estimator
+			 * Create a LightGBM estimator	
 			 */
 			// Define the name of the RdSAPBuilding property that we're trying to estimate. 
 			string RDSAP_ESTIMATOR_TARGET_FEATURE = "DEPCEnergyEfficiency";
+			foreach (var building in buildings)
+			{
+				Console.WriteLine($"{building.WindowsOrdinalEnergyEfficiencyFloatForLightGBM}, {building.NumberOfWetRoomsFloatForLightGBM}, {building.HotWaterOrdinalEnergyEfficiencyFloatForLightGBM}");
+			}
 			string[] RDSP_ESTIMATOR_FEATURES = new string[]
 			{
 				"ConstructionAgeIndexFloatForLightGBM",								// A to L as 0 to 10
-				"DEPCEnergyEfficiencyPotential"			,						// Potential energy efficiency
+				"DEPCEnergyEfficiencyPotential"         ,						// Potential energy efficiency
 				"ExtensionCountFloatForLightGBM",									// Nuber of extnsions
-				"NumberOfWetRoomsFloatForLightGBM",									// Number of wet rooms
-				"NumberOfOpenFireplacesFloatForLightGBM",							// Numer of open fireplaces
+				//"NumberOfWetRoomsFloatForLightGBM",									// Number of wet rooms
+				//"NumberOfOpenFireplacesFloatForLightGBM",							// Numer of open fireplaces
 				"HotWaterOrdinalEnergyEfficiencyFloatForLightGBM",					// Hot water system efficiency 0 - 5
 				//"FloorOrdinalEnergyEfficiencyFloatForLightGBM",						// Floor construction efficiency 0 - 5
 				"WindowsOrdinalEnergyEfficiencyFloatForLightGBM"					// Windows efficiency 0 - 5

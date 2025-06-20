@@ -172,6 +172,7 @@ namespace MeesSDK.RsSAP
 			// Ratings
 			DEPCRating					= DEPCRegisterData[CURRENT_ENERGY_RATING_ABEL];
 			DEPCRatingPotential			= DEPCRegisterData[POTENTIAL_ENERGY_RATING_LABEL];
+			
 			/*
 			 * Define Ordinal efficiency values. Things with enumerated values."Very poor", "poor",.., "Very good".
 			 */
@@ -1059,19 +1060,21 @@ namespace MeesSDK.RsSAP
 			// Try cost and efficiency values
 			try
 			{
-				EnvironmentImpactCurrent	= float.Parse(DEPCRegisterData["ENVIRONMENT_IMPACT_CURRENT"]);
-				EnvironmentImpactPotential	= float.Parse(DEPCRegisterData["ENVIRONMENT_IMPACT_POTENTIAL"]);
-				EnergyConsumptionCurrent	= float.Parse(DEPCRegisterData["ENERGY_CONSUMPTION_CURRENT"]);
-				EnergyConsumptionPotential	= float.Parse(DEPCRegisterData["ENERGY_CONSUMPTION_POTENTIAL"]);
-				Co2EmissionsCurrent			= float.Parse(DEPCRegisterData["CO2_EMISSIONS_CURRENT"]);
-				Co2EmissCurrPerFloorArea	= float.Parse(DEPCRegisterData["CO2_EMISS_CURR_PER_FLOOR_AREA"]);
-				Co2EmissionsPotential		= float.Parse(DEPCRegisterData["CO2_EMISSIONS_POTENTIAL"]);
-				LightingCostCurrent			= float.Parse(DEPCRegisterData["LIGHTING_COST_CURRENT"]);
-				LightingCostPotential		= float.Parse(DEPCRegisterData["LIGHTING_COST_POTENTIAL"]);
-				HeatingCostCurrent			= float.Parse(DEPCRegisterData["HEATING_COST_CURRENT"]);
-				HeatingCostPotential		= float.Parse(DEPCRegisterData["HEATING_COST_POTENTIAL"]);
-				HotWaterCostCurrent			= float.Parse(DEPCRegisterData["HOT_WATER_COST_CURRENT"]);
-				HotWaterCostPotential		= float.Parse(DEPCRegisterData["HOT_WATER_COST_POTENTIAL"]);
+				EnvironmentImpactCurrent		= float.Parse(DEPCRegisterData["ENVIRONMENT_IMPACT_CURRENT"]);
+				EnvironmentImpactPotential		= float.Parse(DEPCRegisterData["ENVIRONMENT_IMPACT_POTENTIAL"]);
+				EnergyConsumptionCurrent		= float.Parse(DEPCRegisterData["ENERGY_CONSUMPTION_CURRENT"]);
+				EnergyConsumptionPotential		= float.Parse(DEPCRegisterData["ENERGY_CONSUMPTION_POTENTIAL"]);
+				Co2EmissionsCurrent				= float.Parse(DEPCRegisterData["CO2_EMISSIONS_CURRENT"]);
+				Co2EmissCurrPerFloorArea		= float.Parse(DEPCRegisterData["CO2_EMISS_CURR_PER_FLOOR_AREA"]);
+				Co2EmissionsPotential			= float.Parse(DEPCRegisterData["CO2_EMISSIONS_POTENTIAL"]);
+				LightingCostCurrent				= float.Parse(DEPCRegisterData["LIGHTING_COST_CURRENT"]);
+				LightingCostPotential			= float.Parse(DEPCRegisterData["LIGHTING_COST_POTENTIAL"]);
+				HeatingCostCurrent				= float.Parse(DEPCRegisterData["HEATING_COST_CURRENT"]);
+				HeatingCostPotential			= float.Parse(DEPCRegisterData["HEATING_COST_POTENTIAL"]);
+				HotWaterCostCurrent				= float.Parse(DEPCRegisterData["HOT_WATER_COST_CURRENT"]);
+				HotWaterCostPotential			= float.Parse(DEPCRegisterData["HOT_WATER_COST_POTENTIAL"]);
+				DEPCEnergyEfficiency            = float.Parse(DEPCRegisterData[CURRENT_ENERGY_EFFICIENCY_LABEL]);
+				DEPCEnergyEfficiencyPotential   = float.Parse(DEPCRegisterData[POTENTIAL_ENERGY_EFFICIENCY_LABEL]);
 			}
 			catch
 			{
