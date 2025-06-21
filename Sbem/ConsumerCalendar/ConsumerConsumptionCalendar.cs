@@ -24,7 +24,7 @@ namespace MeesSDK.Sbem.ConsumerCalendar
 		/// 
 		/// </summary>
 		/// <param name="name"></param>
-		public ConsumerConsumptionCalendar(string name) : base(name)
+		public ConsumerConsumptionCalendar(string name, float area) : base(name, area)
 		{
 			Totals = new ConsumerConsumptionRecord(13, 0, 0, 0, 0, 0, 0); 
 		}
@@ -47,7 +47,7 @@ namespace MeesSDK.Sbem.ConsumerCalendar
 		/// <returns></returns>
 		public ConsumerConsumptionCalendar Clone()
 		{
-			ConsumerConsumptionCalendar output = new ConsumerConsumptionCalendar(Description);
+			ConsumerConsumptionCalendar output = new ConsumerConsumptionCalendar(Description, Area);
 			for (int recordID = 0; recordID < Records.Length; recordID++)
 				output.AddRecord(Records[recordID].Clone());
 			return output;
@@ -67,10 +67,7 @@ namespace MeesSDK.Sbem.ConsumerCalendar
 			Console.WriteLine($"{"Month",-8}{"Heating",10}{"Cooling",10}{"Auxiliary",10}{"Lighting",10}{"DHW",10}{"Equipment",10}");
 			Console.WriteLine("-------------------------------------------------------------------------------");
 			foreach (var record in Records)
-			{
-				Console.WriteLine(record.Dhw);
 				Console.WriteLine($"{record.Month,-8}{record.Heating,10:0.000}{record.Cooling,10:0.000}{record.Auxiliary,10:0.000}{record.Lighting,10:0.000}{record.Dhw,10:0.000}{record.Equipment,10:0.000}");
-			}
 			Console.WriteLine("-------------------------------------------------------------------------------");
 		}
 	}

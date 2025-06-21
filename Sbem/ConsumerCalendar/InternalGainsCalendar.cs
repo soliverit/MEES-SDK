@@ -8,7 +8,7 @@ namespace MeesSDK.Sbem.ConsumerCalendar
 {
 	public class InternalGainsCalendar : UsageCalendarBase<InternalGainsRecord>
 	{
-		public InternalGainsCalendar(string name) : base(name)
+		public InternalGainsCalendar(string name, float area) : base(name, area)
 		{
 			Totals = new InternalGainsRecord(13, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		}
@@ -31,7 +31,7 @@ namespace MeesSDK.Sbem.ConsumerCalendar
 		/// <returns></returns>
 		public InternalGainsCalendar Clone()
 		{
-			InternalGainsCalendar output = new InternalGainsCalendar(Description);
+			InternalGainsCalendar output = new InternalGainsCalendar(Description, Area);
 			for (int recordID = 0; recordID < Records.Length; recordID++)
 				output.AddRecord(Records[recordID].Clone());
 			return output;

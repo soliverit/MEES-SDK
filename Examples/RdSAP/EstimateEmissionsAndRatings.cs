@@ -10,16 +10,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MeesSDK.Examples
+namespace MeesSDK.Examples.RdSAP
 {
-	public class DEPCRatingEstimationWithLightGBMExample : IMeesSDKExample
+	public class EstimateEmissionsAndRatings : IMeesSDKExample
 	{
+		/// <summary>
+		/// The path to the input certificates
+		/// </summary>
+		public string CertificatesPath { get; protected set; }
+		public EstimateEmissionsAndRatings(string path) { CertificatesPath  = path; }
+		/// <summary>
+		/// The estimator RunTheExample creates.
+		/// </summary>
+		public LightGBMEstimator<RdSAPBuilding> Estimator { get; protected set; }
 		/// <summary>
 		/// Using the DEPC register and RdSAPBuilding extended features to create RdSAP estimators
 		/// </summary>
 		/// <param name="proejct"></param>
 		/// <param name="sbem"></param>
-		public void DoTheExample()
+		public void RunTheExample()
 		{
 			/*
 			 * Prepare the reference data used to extend the register's features. 
@@ -58,7 +67,7 @@ namespace MeesSDK.Examples
 			string[] RDSP_ESTIMATOR_FEATURES = new string[]
 			{
 				"ConstructionAgeIndexFloatForLightGBM",								// A to L as 0 to 10
-				"DEPCEnergyEfficiencyPotential"         ,						// Potential energy efficiency
+				"DEPCEnergyEfficiencyPotential",									// Potential energy efficiency
 				"ExtensionCountFloatForLightGBM",									// Number of extensions
 				"NumberOfWetRoomsFloatForLightGBM",									// Number of wet rooms
 				"NumberOfOpenFireplacesFloatForLightGBM",							// Number of open fireplaces
@@ -83,20 +92,31 @@ namespace MeesSDK.Examples
 			// You can remove corrupt results from this data, too. Anything IValidatable (Thing that has a public HasError getter
 			mlData.RemoveCorruptObjects();
 			// Create the estimator
-			LightGBMEstimator<RdSAPBuilding> estimator = new LightGBMEstimator<RdSAPBuilding>(mlData, RDSAP_ESTIMATOR_TARGET_FEATURE);
+			Estimator					= new LightGBMEstimator<RdSAPBuilding>(mlData, RDSAP_ESTIMATOR_TARGET_FEATURE);
 			// Configure the learner
-			estimator.LearningRate			= 0.075f;
-			estimator.NumberOfIterations    = 100;	
+			Estimator.LearningRate			= 0.075f;
+			Estimator.NumberOfIterations    = 100;
 			// Train it
-			estimator.Train();
+			Estimator.Train();
 			// Print the results: A trained estimator's PrintSummary will include the Test Buildings RMSE
-			estimator.PrintSummary();
+			Estimator.PrintSummary();
+			/*
+			 * The features, data, and process can be applied to anything else that can be estimated.
+			 * 
+			 * NOTE: There's a large gap between capable and useful, but you can add features
+			 *		 tailored to the project at hand.
+			 */
+			// kgCO2/m²
+			LightGBMEstimator<RdSAPBuilding> co2Estimator    = new LightGBMEstimator<RdSAPBuilding>(mlData, "CO2_PER_FLOOR_AREA");
+			co2Estimator.Train();
+			co2Estimator.PrintSummary();
+			// Potential energy efficiency
+			LightGBMEstimator<RdSAPBuilding> potentialEstimator = new LightGBMEstimator<RdSAPBuilding>(mlData, RdSAPBuilding.POTENTIAL_ENERGY_EFFICIENCY_LABEL);
+			co2Estimator.Train();
+			co2Estimator.PrintSummary();
 		}
 
-
-
 		//============ Admin ============//
-		public string Name { get; set; } = "DEPC Estate Optimisation 1: Database interactions ";
 		public string GetDescription()
 		{
 			return @"""Estimating D-EPC ratings using Gradient-boosting decision trees
@@ -104,10 +124,12 @@ namespace MeesSDK.Examples
 We can make a reasonable guess at a of a D-EPC rating from the associated certificate's D-EPC register entry 
 and inference through RdSAPBuilding. 
 
-This exmaple demonstrates how to create a simple LightGBMEstimator D-EPC rating prediction.
+This example demonstrates how to create a simple LightGBMEstimator D-EPC rating prediction.
 
 	To download your own example set visit: https://epc.opendatacommunities.org/domestic/search and use
 	any of the files named 'certificates.csv' E.g. ./domestic-E06000002-Middlesbrough/certificates.csv
+
+Challenge: The related study's accuracy on the Stockton-on-Tees dataset was 2.37 on the test data, 3.1 on the holdout.
 				""";
 		}
 	}

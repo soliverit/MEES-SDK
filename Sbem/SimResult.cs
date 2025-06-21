@@ -24,15 +24,15 @@ namespace MeesSDK.Sbem
 		public const string ZONE_COOLING_DEMAND_REPORT_LABEL		= "REPORT- LD-C Details of Cooling demand for zone";
 		public const string ZONE_INTERNAL_GAINS_REPORT_LABEL		= "REPORT- LD-I Details of Internal heat production for zone";
 		public const string PROJECT_RENEWWABLES_CO2_REPORT_LABEL	= "REPORT- CO2 emissions and primary energy equivalent to renewables-generated electricity";
-		public const string PROJECT_ENERGY_PERFORMANCE_REPORT_ABEL = "REPORT- PEPS Project Energy Performance. Delivered energy consumption";
+		public const string PROJECT_ENERGY_PERFORMANCE_REPORT_ABEL	= "REPORT- PEPS Project Energy Performance. Delivered energy consumption";
 		/// <summary>
 		/// Project-level Fuel Type consumption calendar.
 		/// </summary>
-		public FuelConsumptionCalendar FuelCalendar { get; }
+		public FuelConsumptionCalendar FuelCalendar { get; protected set; }
 		/// <summary>
 		/// Project-level End Use consumption calendar.
 		/// </summary>
-		public ConsumerConsumptionCalendar ConsumerCalendar { get; }
+		public ConsumerConsumptionCalendar ConsumerCalendar { get; protected set; }
 		/// <summary>
 		/// HVAC-level End Use consumption calendars.
 		/// </summary>
@@ -63,6 +63,10 @@ namespace MeesSDK.Sbem
 			ConsumerCalendar	= consumption;
 			FuelCalendar		= fuel;
 		}
+		public SimResult()
+		{
+
+		}
 		/// <summary>
 		/// Parse a .sim or _sim.csv file.
 		/// </summary>
@@ -70,13 +74,11 @@ namespace MeesSDK.Sbem
 		/// <returns></returns>
 		public static SimResult ParseSimFile(string path)
 		{
-			ConsumerConsumptionCalendar consumption	= new ConsumerConsumptionCalendar("Project");
-			FuelConsumptionCalendar fuel			= new FuelConsumptionCalendar("Project");
-			SimResult simResults					= new SimResult(consumption, fuel);
+			SimResult simResult					= new SimResult();
 			if (!File.Exists(path))
 			{
 				Console.Write($"SIM reader: Path not found {path}");
-				return simResults;
+				return simResult;
 			}
 			bool inConsumer		= false;
 			bool inHvacConsumer	= false;
@@ -89,10 +91,10 @@ namespace MeesSDK.Sbem
 			string name			= "";
 			string[] lines = File.ReadAllLines(path);
 
-			for (int i = 0; i < lines.Length; i++)
+			for (int lineID = 0; lineID < lines.Length; lineID++)
 			{
 				
-				string line = lines[i].Trim();
+				string line = lines[lineID].Trim();
 				// Skip non-calendar reports.
 
 				if (line == PROJECT_CONSUMER_CALENDAR_LABEL)
@@ -135,57 +137,62 @@ namespace MeesSDK.Sbem
 				// If we're processing a calendar
 				if (foundSomething)
 				{
+					lineID			+= 2;
+					float area		= float.Parse(lines[lineID].Split(",")[0]);
 					string header	= line;
 					string[] rows	= new string[12];
-					i				+= 5;
+					lineID			+=3;
 					for (int x = 0; x < 12; x++)
 					{
-						rows[x] = lines[i];
-						i++;
+						rows[x] = lines[lineID];
+						lineID++;
 					}
 					if (inConsumer)
 					{
+						ConsumerConsumptionCalendar consumption			= new ConsumerConsumptionCalendar("Project", area);
 						for (int rowID = 0; rowID < 12; rowID++)
 							consumption.AddRecord(ConsumerConsumptionRecord.FromLine(rows[rowID]));
+						simResult.SetProjectEndUseCalendar(consumption);
 					}
 					else if (inFuel)
 					{
+						FuelConsumptionCalendar fuel					= new FuelConsumptionCalendar("Project", area);
 						for (int rowID = 0; rowID < 12; rowID++)
 							fuel.AddRecord(FuelConsumptionRecord.FromLine(rows[rowID]));
 					}else if (inHvacConsumer)
 					{
-						ConsumerConsumptionCalendar hvacConsumerCalendar = new ConsumerConsumptionCalendar(name);
+						ConsumerConsumptionCalendar hvacConsumerCalendar = new ConsumerConsumptionCalendar(name, area);
 						for (int rowID = 0; rowID < 12; rowID++)
 							hvacConsumerCalendar.AddRecord(ConsumerConsumptionRecord.FromHvacLine(rows[rowID]));
-						simResults.HvacConsumerCalendars[name]	= hvacConsumerCalendar;
+						simResult.HvacConsumerCalendars[name]			= hvacConsumerCalendar;
 					}
 					else if (inHvacFuel)
 					{
-						FuelConsumptionCalendar hvacFuelConsumerCalendar = new FuelConsumptionCalendar(name);
+						FuelConsumptionCalendar hvacFuelConsumerCalendar = new FuelConsumptionCalendar(name, area);
 						for (int rowID = 0; rowID < 12; rowID++)
 							hvacFuelConsumerCalendar.AddRecord(FuelConsumptionRecord.FromLine(rows[rowID]));
-						simResults.HvacFuelCalendars[name] = hvacFuelConsumerCalendar;
+						simResult.HvacFuelCalendars[name] = hvacFuelConsumerCalendar;
 					}
 					else if (inZoneCooling)
 					{
-						CoolingDemandCalendar coolingDemandCalendar = new CoolingDemandCalendar(name);
+						CoolingDemandCalendar coolingDemandCalendar = new CoolingDemandCalendar(name, area);
 						for (int rowID = 0; rowID < 12; rowID++)
 							coolingDemandCalendar.AddRecord(CoolingDemandRecord.FromLine(rows[rowID]));
-						simResults.ZoneCoolingDemandCalendars[name] = coolingDemandCalendar;
+						simResult.ZoneCoolingDemandCalendars[name] = coolingDemandCalendar;
 					}
 					else if (inZoneHeating)
 					{
-						HeatingDemandCalendar heatingDemandCalendar = new HeatingDemandCalendar(name);
+						HeatingDemandCalendar heatingDemandCalendar = new HeatingDemandCalendar(name, area);
 						for (int rowID = 0; rowID < 12; rowID++)
 							heatingDemandCalendar.AddRecord(HeatingDemandRecord.FromLine(rows[rowID]));
-						simResults.ZoneHeatingDemandCalendars[name] = heatingDemandCalendar;
+						simResult.ZoneHeatingDemandCalendars[name] = heatingDemandCalendar;
 					}
 					else if (inZoneGains)
 					{
-						InternalGainsCalendar zoneInternalGainsCalendar	= new InternalGainsCalendar(name);
+						InternalGainsCalendar zoneInternalGainsCalendar	= new InternalGainsCalendar(name, area);
 						for (int rowID = 0; rowID < 12; rowID++)
 							zoneInternalGainsCalendar.AddRecord(InternalGainsRecord.FromLine(rows[rowID]));
-						simResults.ZoneInternalGainsCalendars[name] = zoneInternalGainsCalendar;
+						simResult.ZoneInternalGainsCalendars[name] = zoneInternalGainsCalendar;
 					}
 					// Don't worry about figuring out what was found, just reset everything.
 					inConsumer		= false;
@@ -198,7 +205,27 @@ namespace MeesSDK.Sbem
 					foundSomething	= false;
 				}
 			}
-			return simResults;
+			return simResult;
+		}
+		/// <summary>
+		/// Set the building End Use Calendar. 
+		/// <para>Note: A bit dirty but it let's us force area in UsageCalendarBase constructors,
+		/// which is a lot more consistent than passing this calendar at SimResult constructor.</para>
+		/// </summary>
+		/// <param name="calendar"></param>
+		public void SetProjectEndUseCalendar(ConsumerConsumptionCalendar calendar)
+		{
+			ConsumerCalendar    = calendar;
+		}
+		/// <summary>
+		/// Set the building Fuel Type Calendar. 
+		/// <para>Note: A bit dirty but it let's us force area in UsageCalendarBase constructors,
+		/// which is a lot more consistent than passing this calendar at SimResult constructor.</para>
+		/// </summary>
+		/// <param name="calendar"></param>
+		public void SetProjectFuelTypeCalendar(ConsumerConsumptionCalendar calendar)
+		{
+			ConsumerCalendar    = calendar;
 		}
 	}
 }

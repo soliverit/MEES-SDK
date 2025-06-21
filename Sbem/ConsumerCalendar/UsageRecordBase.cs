@@ -8,7 +8,9 @@ namespace MeesSDK.Sbem.ConsumerCalendar
 {
 	public class UsageRecordBase
 	{
-		
+		protected bool _isM2Mode { get; set; } = true;
+		public bool IskWh { get => !_isM2Mode; }
+		public bool IskWhm2 { get => _isM2Mode; }
 		public static Dictionary<string, int> MonthIDs = new() {
 			["JAN"] = 1,
 			["FEB"] = 2,
@@ -52,6 +54,7 @@ namespace MeesSDK.Sbem.ConsumerCalendar
 			Month	= month;
 			MonthArrayIndex = MonthID - 1;
 		}
+		
 		public int MonthID { get; }
 		public string Month { get; }
 		public int MonthArrayIndex { get; }

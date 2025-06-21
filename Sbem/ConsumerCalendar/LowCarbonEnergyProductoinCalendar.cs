@@ -8,7 +8,7 @@ namespace MeesSDK.Sbem.ConsumerCalendar
 {
 	public class LowCarbonEnergyProductoinCalendar : UsageCalendarBase<LowCarbonEnergyProductoinRecord>
 	{
-		public LowCarbonEnergyProductoinCalendar(string description) : base(description) { }
+		public LowCarbonEnergyProductoinCalendar(string description, float area) : base(description, area) { }
 		public override void Print()
 		{
 

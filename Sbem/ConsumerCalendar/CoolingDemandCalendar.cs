@@ -8,7 +8,7 @@ namespace MeesSDK.Sbem.ConsumerCalendar
 {
 	public class CoolingDemandCalendar : UsageCalendarBase<CoolingDemandRecord>
 	{
-		public CoolingDemandCalendar(string name) : base(name)
+		public CoolingDemandCalendar(string name, float area) : base(name, area)
 		{
 			Totals = new(13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		}
@@ -22,7 +22,7 @@ namespace MeesSDK.Sbem.ConsumerCalendar
 		/// <returns></returns>
 		public CoolingDemandCalendar Clone()
 		{
-			CoolingDemandCalendar output = new CoolingDemandCalendar(Description);
+			CoolingDemandCalendar output = new CoolingDemandCalendar(Description, Area);
 			for (int recordID = 0; recordID < Records.Length; recordID++)
 				output.AddRecord(Records[recordID].Clone());
 			return output;

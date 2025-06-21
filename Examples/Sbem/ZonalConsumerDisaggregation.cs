@@ -1,17 +1,16 @@
-﻿using MeesSDK.Examples;
-using MeesSDK.Sbem;
+﻿using MeesSDK.Sbem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MeesSDK.Examples
+namespace MeesSDK.Examples.Sbem
 {
-	public class ConsumptionDisaggregtionForZones : SbemExampleBase
+	public class ZonalConsumerDisaggregation : SbemExampleBase
 	{
-		public ConsumptionDisaggregtionForZones(SbemProject project, SbemService service) : base(project, service) { }
-		public override void DoTheExample()
+		public ZonalConsumerDisaggregation(SbemProject project, SbemService service) : base(project, service) { }
+		public override void RunTheExample()
 		{
 			/*
 			 * It's just two lines. What's happening under the hood?

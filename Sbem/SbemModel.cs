@@ -84,40 +84,40 @@ AIR-CON-INSTALLED = No
 	/// The .inp information about the calulcation, the building construction phase, and
 	/// regulations
 	/// </summary>
-    public SbemCompliance Compliance { get; set; }
+	public SbemCompliance Compliance { get; set; }
 	/// <summary>
 	/// List<SbemConstruction> The .inp objects for opaque surface construction properties. SbemDoor
 	/// and SbemWall.
 	/// </summary>
-    public SbemObjectSet<SbemConstruction> Constructions { get; } = new();
+	public SbemObjectSet<SbemConstruction> Constructions { get; } = new();
 	/// <summary>
 	/// List<SbemGlass> The .inp objects for transparent surface construction properties. Window
 	/// </summary>
-    public SbemObjectSet<SbemGlass> Glasses { get; } = new();
+	public SbemObjectSet<SbemGlass> Glasses { get; } = new();
 	/// <summary>
 	/// The .inp HVAC definitions. HVACs define heating, cooling, and central ventilation strategy.
 	/// </summary>
-    public SbemObjectSet<SbemHvacSystem> HvacSystems { get; } = new();
+	public SbemObjectSet<SbemHvacSystem> HvacSystems { get; } = new();
 	/// <summary>
 	/// The .inp Domestic Hot Water system definitions. They define systems providing domestic hot water
 	/// or hot water and heating.
 	/// </summary>
-    public SbemObjectSet<SbemDhwGenerator> Dhws { get; } = new();
+	public SbemObjectSet<SbemDhwGenerator> Dhws { get; } = new();
 	/// <summary>
 	/// The .inp shower definitions. They define SbemShower.
 	/// </summary>
-    public SbemObjectSet<SbemShower> Showers { get; } = new();
+	public SbemObjectSet<SbemShower> Showers { get; } = new();
 	/// <summary>
 	/// The .inp assessor recommendation comments and selections. These are objects added by
 	/// the assessor or the SBEM interface that tell SBEM whether measures should be included 
 	/// and their potential impact if they were. Potential in ordinal efficiency labels (poor, good).
 	/// </summary>
-    public SbemObjectSet<SbemRecUser> RecUsers { get; } = new();
+	public SbemObjectSet<SbemRecUser> RecUsers { get; } = new();
 	/// <summary>
 	/// Th .inp seemingly unused struct for defining retrofit impacts in real monetary and efficiency
 	/// terms.
 	/// </summary>
-    public SbemObjectSet<SbemImprovementMeasure> ImprovementMeasures { get; } = new();
+	public SbemObjectSet<SbemImprovementMeasure> ImprovementMeasures { get; } = new();
 	/// <summary>
 	/// The .sim output Project End Use consumption calendar. Monthly consumption for heating, cooling,
 	/// hot water, lighting, auxiliary systems, and equipment.
@@ -149,11 +149,11 @@ AIR-CON-INSTALLED = No
 	/// The .sim SimReult data created by SBEM. Attached using PairWithSimResult(). This contains End Use
 	/// demand, heat production, and renewables annual calendars. 12 month calendars 
 	/// </summary>
-	public SimResult? PairedSimResult { get; protected set; } 
+	public SimResult? PairedSimResult { get; protected set; }
 	/// <summary>
 	/// The .inp for on-site solar panels.
 	/// </summary>
-    public SbemPvs Pvs { get; set; }
+	public SbemPvs Pvs { get; set; }
 	/// <summary>
 	/// Is there solar panels on-site?
 	/// </summary>
@@ -161,7 +161,7 @@ AIR-CON-INSTALLED = No
 	/// <summary>
 	/// The .in solar energy system for hot water.
 	/// </summary>
-    public SbemSes Ses { get; set; }
+	public SbemSes Ses { get; set; }
 	public bool HasSes { get => Ses != null; }
 	/// <summary>
 	/// has solar hot water?
@@ -175,12 +175,12 @@ AIR-CON-INSTALLED = No
 	/// The mysterious .inp object that hasn't had a single property
 	/// since before 2008.
 	/// </summary>
-    public SbemRecProject RecProject { get; set; }
+	public SbemRecProject RecProject { get; set; }
 
 	/// <summary>
 	/// Are there SbemWindGenerator on-site?
 	/// </summary>
-    public bool HasWindGenerator { get => WindGenerator != null; }
+	public bool HasWindGenerator { get => WindGenerator != null; }
 	/// <summary>
 	/// Parse a .inp model into SbemModel from the filesystem.
 	/// </summary>
@@ -193,7 +193,7 @@ AIR-CON-INSTALLED = No
 			var model = new SbemModel();
 			model.AddError((int)SbemError.ErrorCode.CONTENT_FILE_NOT_EXISTS, $"Inp file '{path}' doesn't exist.");
 			return model;
-		} 
+		}
 		string content = File.ReadAllText(path);
 		return ParseInpContent(content);
 	}
@@ -223,7 +223,7 @@ AIR-CON-INSTALLED = No
 		{
 			lineNumber++;
 			line = line.Trim();
-			if (string.IsNullOrWhiteSpace(line) || line.StartsWith("$")) 
+			if (string.IsNullOrWhiteSpace(line) || line.StartsWith("$"))
 				continue;
 			else if (!inObject)
 			{
@@ -250,7 +250,7 @@ AIR-CON-INSTALLED = No
 					 * There's not really a clean way to do this with C# because it's strict typed
 					 * and it doesn't have Late Static Binding. So, we add an OBJECT_NAME and Object()
 					 * method to each class, even though it's not in the abstract SbemObject.
-					 */ 
+					 */
 					switch (objectType)
 					{
 						case SbemCompliance.OBJECT_NAME:
@@ -368,16 +368,16 @@ AIR-CON-INSTALLED = No
 	{
 		SbemModel outputModel = Clone();
 		outputModel.EndUseConsumerCalendar.Subtract(inputModel.EndUseConsumerCalendar);
-		for(int hvacID = 0; hvacID < HvacSystems.Length; hvacID++)
+		for (int hvacID = 0; hvacID < HvacSystems.Length; hvacID++)
 		{
-			SbemHvacSystem hvacSystem	= outputModel.HvacSystems[hvacID];
-			SbemHvacSystem otherHvac	= inputModel.HvacSystems[hvacSystem.Name];
+			SbemHvacSystem hvacSystem = outputModel.HvacSystems[hvacID];
+			SbemHvacSystem otherHvac = inputModel.HvacSystems[hvacSystem.Name];
 			hvacSystem.FuelUseConsumerCalendar.Subtract(hvacSystem.FuelUseConsumerCalendar);
 			hvacSystem.EndUseConsumerCalendar.Subtract(hvacSystem.EndUseConsumerCalendar);
-			for(int zoneID = 0; zoneID < hvacSystem.Zones.Length; zoneID++)
+			for (int zoneID = 0; zoneID < hvacSystem.Zones.Length; zoneID++)
 			{
-				SbemZone zone		= outputModel.Zones[zoneID];
-				SbemZone otherZone	= inputModel.Zones[zone.Name];
+				SbemZone zone = outputModel.Zones[zoneID];
+				SbemZone otherZone = inputModel.Zones[zone.Name];
 				zone.HeatingEnergyDemandCalendar.Subtract(otherZone.HeatingEnergyDemandCalendar);
 				zone.CoolingEnergyDemandCalendar.Subtract(otherZone.CoolingEnergyDemandCalendar);
 				zone.InternalHeatGainsCalendar.Subtract(otherZone.InternalHeatGainsCalendar);
@@ -387,58 +387,58 @@ AIR-CON-INSTALLED = No
 	}
 	public void PairWithSimResult(SimResult simResult)
 	{
-		EndUseConsumerCalendar	= simResult.ConsumerCalendar;
+		EndUseConsumerCalendar  = simResult.ConsumerCalendar;
 		FuelUseConsumerCalendar = simResult.FuelCalendar;
 		// Do HVACs
-		for(int hvacID = 0; hvacID < HvacSystems.Length; hvacID++)
+		for (int hvacID = 0; hvacID < HvacSystems.Length; hvacID++)
 		{
-			SbemHvacSystem hvac	= HvacSystems[hvacID];
+			SbemHvacSystem hvac = HvacSystems[hvacID];
 			// HVAC calendars
-			if(simResult.HvacConsumerCalendars.ContainsKey(hvac.Name))
+			if (simResult.HvacConsumerCalendars.ContainsKey(hvac.Name))
 				hvac.SetEndUseConsumerCalendar(simResult.HvacConsumerCalendars[hvac.Name]);
-			if(simResult.HvacFuelCalendars.ContainsKey(hvac.Name))
+			if (simResult.HvacFuelCalendars.ContainsKey(hvac.Name))
 				hvac.SetFuelTypConsumerCalendar(simResult.HvacFuelCalendars[hvac.Name]);
 			// Do zones
-			for(int zoneID = 0; zoneID < hvac.Zones.Length; zoneID++)
+			for (int zoneID = 0; zoneID < hvac.Zones.Length; zoneID++)
 			{
-				SbemZone zone	= hvac.Zones[zoneID];
-				if(simResult.ZoneInternalGainsCalendars.ContainsKey(zone.Name))
+				SbemZone zone = hvac.Zones[zoneID];
+				if (simResult.ZoneInternalGainsCalendars.ContainsKey(zone.Name))
 					zone.SetInternalGainsCalendar(simResult.ZoneInternalGainsCalendars[zone.Name]);
 				if (simResult.ZoneHeatingDemandCalendars.ContainsKey(zone.Name))
 					zone.SetHeatingEnergyDemandCalendar(simResult.ZoneHeatingDemandCalendars[zone.Name]);
-				if(simResult.ZoneCoolingDemandCalendars.ContainsKey(zone.Name))
+				if (simResult.ZoneCoolingDemandCalendars.ContainsKey(zone.Name))
 					zone.SetCoolingEnergyDemandCalendar(simResult.ZoneCoolingDemandCalendars[zone.Name]);
 			}
 		}
 	}
 	public override string ToString()
-    {
-        var content = new StringBuilder();
-        content.AppendLine(General.ToString());
-        content.AppendLine(Compliance.ToString());
+	{
+		var content = new StringBuilder();
+		content.AppendLine(General.ToString());
+		content.AppendLine(Compliance.ToString());
 
-        foreach (var obj in Constructions.Objects)
-            content.AppendLine(obj.ToString());
+		foreach (var obj in Constructions.Objects)
+			content.AppendLine(obj.ToString());
 
-        foreach (var obj in Glasses.Objects)
-            content.AppendLine(obj.ToString());
+		foreach (var obj in Glasses.Objects)
+			content.AppendLine(obj.ToString());
 
-        if (HasSes) content.AppendLine(Ses.ToString());
-        if (HasPvs) content.AppendLine(Pvs.ToString());
-        if (HasWindGenerator) content.AppendLine(WindGenerator.ToString());
+		if (HasSes) content.AppendLine(Ses.ToString());
+		if (HasPvs) content.AppendLine(Pvs.ToString());
+		if (HasWindGenerator) content.AppendLine(WindGenerator.ToString());
 
-        foreach (var obj in Showers.Objects)
-            content.AppendLine(obj.ToString());
-        foreach (var obj in Dhws.Objects)
-            content.AppendLine(obj.ToString());
-        foreach (var obj in HvacSystems.Objects)
-            content.AppendLine(obj.ToString());
-        foreach (var obj in RecUsers.Objects)
-            content.AppendLine(obj.ToString());
-        foreach (var obj in ImprovementMeasures.Objects)
-            content.AppendLine(obj.ToString());
-        return content.ToString();
-    }
+		foreach (var obj in Showers.Objects)
+			content.AppendLine(obj.ToString());
+		foreach (var obj in Dhws.Objects)
+			content.AppendLine(obj.ToString());
+		foreach (var obj in HvacSystems.Objects)
+			content.AppendLine(obj.ToString());
+		foreach (var obj in RecUsers.Objects)
+			content.AppendLine(obj.ToString());
+		foreach (var obj in ImprovementMeasures.Objects)
+			content.AppendLine(obj.ToString());
+		return content.ToString();
+	}
 	/// <summary>
 	/// Clone this SbemModel
 	/// </summary>
@@ -446,7 +446,7 @@ AIR-CON-INSTALLED = No
 	public SbemModel Clone()
 	{
 		// Make sure we don't mess with the as-built model
-		SbemModel clone	= ParseInpContent(ToString());
+		SbemModel clone = ParseInpContent(ToString());
 		// Do project-level End Use and Fuel Type calendars
 		if (EndUseConsumerCalendar != null)
 			clone.EndUseConsumerCalendar = EndUseConsumerCalendar.Clone();
@@ -454,9 +454,9 @@ AIR-CON-INSTALLED = No
 			clone.FuelUseConsumerCalendar = FuelUseConsumerCalendar.Clone();
 
 		// Do all HVACS
-		for(int hvacID = 0; hvacID < HvacSystems.Length; hvacID++)
+		for (int hvacID = 0; hvacID < HvacSystems.Length; hvacID++)
 		{
-			SbemHvacSystem hvacSystem	= HvacSystems[hvacID];
+			SbemHvacSystem hvacSystem = HvacSystems[hvacID];
 			// Do HVAC End Use and Fuel Type calendars
 			if (hvacSystem.EndUseConsumerCalendar != null)
 				clone.HvacSystems[hvacID].SetEndUseConsumerCalendar(hvacSystem.EndUseConsumerCalendar.Clone());
@@ -486,7 +486,7 @@ AIR-CON-INSTALLED = No
 		return clone;
 	}
 	public void PrintHvacSystems(bool withZones)
-	{ 
+	{
 		List<List<string>> table = new List<List<string>>();
 		table.Add(new List<string>() { "Type", "Heat source", "Area (m²)", "SEFF", "SSEFF", "C-SEER", "C-SSEER", "SFP (W/m²)" });
 		foreach (SbemHvacSystem hvac in HvacSystems)
@@ -502,9 +502,10 @@ AIR-CON-INSTALLED = No
 					(hvac.HasNumericProperty("COOL-SSEER") ? hvac.NumericProperties["COOL-SSEER"].Value.ToString() : "NA"),
 					(hvac.HasNumericProperty("SFP") ? hvac.NumericProperties["SFP"].Value.ToString() : "NA"),
 				});
-			table.Add(new List<string>() {  });
+			table.Add(new List<string>() { });
 
 		}
 		PHelper.PrintTable(table);
 	}
 	public void DropRecUsers() => RecUsers.Clear();
+}

@@ -20,7 +20,7 @@ namespace MeesSDK.Sbem.ConsumerCalendar
 	public class FuelConsumptionCalendar : UsageCalendarBase<FuelConsumptionRecord>
 	{
 
-		public FuelConsumptionCalendar(string name) : base(name)
+		public FuelConsumptionCalendar(string name, float area) : base(name, area)
 		{
 			Totals = new FuelConsumptionRecord(13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		}
@@ -47,7 +47,7 @@ namespace MeesSDK.Sbem.ConsumerCalendar
 		/// <returns></returns>
 		public FuelConsumptionCalendar Clone()
 		{
-			FuelConsumptionCalendar output = new FuelConsumptionCalendar(Description);
+			FuelConsumptionCalendar output = new FuelConsumptionCalendar(Description, Area);
 			for (int recordID = 0; recordID < Records.Length; recordID++)
 				output.AddRecord(Records[recordID].Clone());
 			return output;

@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MeesSDK.Examples
+namespace MeesSDK.Examples.Sbem
 {
 	public class RetrofittingWithSBEMExample : SbemExampleBase
 	{
 		public RetrofittingWithSBEMExample(SbemProject project, SbemService service) : base(project, service) { }
-		public override void DoTheExample()
+		public override void RunTheExample()
 		{
 			/* 
 			 * Once you've create your retrofit method, it's straightforward

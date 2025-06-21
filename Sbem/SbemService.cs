@@ -22,7 +22,7 @@ namespace MeesSDK.Sbem
 		/// <summary>
 		/// Determines whether the SBEM.exe output is printed to the console.
 		/// </summary>
-		public bool SilenceSBEM {  get; set; }
+		public bool SilentMode {  get; set; }
 		public SbemService(string sbemPath, string processingPath) 
 		{ 
 			SbemPath			= sbemPath; 
@@ -67,9 +67,9 @@ namespace MeesSDK.Sbem
 
 			var proc = new Process { StartInfo = psi };
 
-			if(!SilenceSBEM)
+			if(!SilentMode)
 				proc.OutputDataReceived += (s, e) => { if (e.Data != null) Console.WriteLine(e.Data); };
-			if(!SilenceSBEM)
+			if(!SilentMode)
 				proc.OutputDataReceived += (s, e) => { if (e.Data != null) Console.WriteLine(e.Data); };
 			proc.ErrorDataReceived += (s, e) => { if (e.Data != null) Console.Error.WriteLine(e.Data); };
 
@@ -150,6 +150,22 @@ namespace MeesSDK.Sbem
 				Requests.Enqueue(request);
 				QueueSignal.Set(); // wake the thread
 			}
+		}
+		/// <summary>
+		/// Wait for the service to process the entire Queue or for a timeout.
+		/// </summary>
+		/// <param name="timeout"></param>
+		/// <returns>True if processing finished before the time out.</returns>
+		public bool WaitForService(int timeout)
+		{
+			long ms = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + timeout;
+			while (Requests.Count > 0)
+			{
+				if (ms < DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())
+					return false;
+				Thread.Sleep(10);
+			}
+			return true;
 		}
 		/// <summary>
 		/// Turn of the SBEM service if it's running.

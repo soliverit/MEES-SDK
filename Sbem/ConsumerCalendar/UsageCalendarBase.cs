@@ -70,10 +70,15 @@ namespace MeesSDK.Sbem.ConsumerCalendar
 		/// <summary>
 		/// The base constructor. Set the Description
 		/// </summary>
-		public UsageCalendarBase(string description)
+		public UsageCalendarBase(string description, float area)
 		{
 			Description	= description;
+			Area		= area;
 		}
+		/// <summary>
+		/// Area of the thing the calendar is associated with. Project, HVAC, Zone
+		/// </summary>
+		public float Area { get; protected set; }
 		/// <summary>
 		/// The header description that flagged the calendar's parse.
 		/// </summary>
@@ -124,5 +129,6 @@ namespace MeesSDK.Sbem.ConsumerCalendar
 		/// Print the calendar to the console. Informative and it looks cool.
 		/// </summary>
 		public abstract void Print();
+
 	}
 }

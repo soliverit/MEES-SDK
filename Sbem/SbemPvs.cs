@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace MeesSDK.Sbem
 {
+	/// <summary>
+	/// The .inp solar panel (PhotoVoltaic System) definition. Defines area, composition, 
+	/// </summary>
 	public class SbemPvs : SbemObject
 	{
 		public const string OBJECT_NAME  = "PVS"; 

@@ -7,9 +7,19 @@ using MeesSDK.Sbem;
 using MeesSDK.Sbem.Retrofitting.Measures;
 namespace MeesSDK.Examples
 {
+	/// <summary>
+	/// The interface for examples.
+	/// </summary>
 	public interface IMeesSDKExample
 	{
+		/// <summary>
+		/// Return a string describing the example.
+		/// </summary>
+		/// <returns></returns>
 		public string GetDescription();
+		/// <summary>
+		/// Print the description
+		/// </summary>
 		public void PrintDescription()
 		{
 			Console.WriteLine("\n====================================");
@@ -17,7 +27,10 @@ namespace MeesSDK.Examples
 			Console.WriteLine(GetDescription());
 			Console.WriteLine("\n====================================");
 		}
-		public void DoTheExample();
+		/// <summary>
+		/// Run the example.
+		/// </summary>
+		public void RunTheExample();
 		
 	}
 }
