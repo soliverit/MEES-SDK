@@ -1,6 +1,7 @@
 ﻿
 
 
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,21 @@ using System.Threading.Tasks;
 
 namespace MeesSDK.Sbem
 {
+	/// <summary>
+	/// The .inp  opaque surfaces construction properties. U-Value (W/m²K), internal 
+	/// heat capacity kJ/m²K, Has metal cladding?, Has U-Value correction.
+	/// <code>Relationships:
+	/// - Has many SbemWall
+	/// - Has many SbemDoor
+	/// </code>
+	/// </summary>
+	//"Default construction for walls" = CONSTRUCTION
+	//	TYPE = U_VALUE
+	//	U-VALUE-CORR = NO
+	//	CM = { 51, 51 }
+	//	METAL-CLADDING = NO
+	//	U-VALUE = 0.32
+	// ..
 	public class SbemConstruction : SbemSpatialObject
 	{
 		public const string OBJECT_NAME  = "CONSTRUCTION"; 
@@ -26,7 +42,7 @@ namespace MeesSDK.Sbem
 		public bool HasDoors { get => Doors.Length > 0; }
 		/// <summary>
 		/// Does this construction have any mapped associated surfaces?
-		/// <para>Note: There should never be an instance where both SbemDoor and SbemWall are associated with an SbemConstruction</para>
+		/// <para>Note: There should never be an instance where both SbemDoor and SbemWall Kare associated with an SbemConstruction</para>
 		/// </summary>
 		public bool HasAnySurfaces { get => HasDoors || HasWalls; }
 		public SbemConstruction(string currentName, List<string> currentProperties) : base(currentName, currentProperties)

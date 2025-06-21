@@ -3,6 +3,13 @@ using MeesSDK.Sbem.ConsumerCalendar;
 using System.Text;
 public class SbemModel : SbemModelBase
 {
+	/// <summary>
+	/// The .inp model - the centre piece of all things SBEM.
+	/// <para>
+	/// There's three versions of this file: As-Built/Actual, Notional,
+	/// and Reference. These are where the BER, TER, and SER are calculated from.
+	/// </para>
+	/// </summary>
 	enum ErrorCodes
 	{
 		CONTENT_FILE_NOT_EXISTS,
@@ -63,38 +70,122 @@ ENG-HERITAGE = NO
 BR-STAGE = As built
 AIR-CON-INSTALLED = No
  ..";
-
+	/// <summary>
+	/// A list of Generic error structs used to track problems with the model found
+	/// internally before sending to SBEM.
+	/// </summary>
 	public List<SbemError> Errors = new List<SbemError>();
+	/// <summary>
+	/// The .inp metadata object. Accrediting body, Assessor, Building, Location, 
+	/// District heat CO2 fact, power factor, SBEM interface information.
+	/// </summary>
 	public SbemGeneral General { get; set; }
+	/// <summary>
+	/// The .inp information about the calulcation, the building construction phase, and
+	/// regulations
+	/// </summary>
     public SbemCompliance Compliance { get; set; }
+	/// <summary>
+	/// List<SbemConstruction> The .inp objects for opaque surface construction properties. SbemDoor
+	/// and SbemWall.
+	/// </summary>
     public SbemObjectSet<SbemConstruction> Constructions { get; } = new();
+	/// <summary>
+	/// List<SbemGlass> The .inp objects for transparent surface construction properties. Window
+	/// </summary>
     public SbemObjectSet<SbemGlass> Glasses { get; } = new();
+	/// <summary>
+	/// The .inp HVAC definitions. HVACs define heating, cooling, and central ventilation strategy.
+	/// </summary>
     public SbemObjectSet<SbemHvacSystem> HvacSystems { get; } = new();
+	/// <summary>
+	/// The .inp Domestic Hot Water system definitions. They define systems providing domestic hot water
+	/// or hot water and heating.
+	/// </summary>
     public SbemObjectSet<SbemDhwGenerator> Dhws { get; } = new();
+	/// <summary>
+	/// The .inp shower definitions. They define SbemShower.
+	/// </summary>
     public SbemObjectSet<SbemShower> Showers { get; } = new();
+	/// <summary>
+	/// The .inp assessor recommendation comments and selections. These are objects added by
+	/// the assessor or the SBEM interface that tell SBEM whether measures should be included 
+	/// and their potential impact if they were. Potential in ordinal efficiency labels (poor, good).
+	/// </summary>
     public SbemObjectSet<SbemRecUser> RecUsers { get; } = new();
+	/// <summary>
+	/// Th .inp seemingly unused struct for defining retrofit impacts in real monetary and efficiency
+	/// terms.
+	/// </summary>
     public SbemObjectSet<SbemImprovementMeasure> ImprovementMeasures { get; } = new();
+	/// <summary>
+	/// The .sim output Project End Use consumption calendar. Monthly consumption for heating, cooling,
+	/// hot water, lighting, auxiliary systems, and equipment.
+	/// <para>Note: Must be attached separately using SetEndUseConsumerCalendar() from the SBEM
+	/// .sim or _sim.csv results.</para>
+	/// consumption.
+	/// </summary>
 	public ConsumerConsumptionCalendar EndUseConsumerCalendar { get; protected set; }
+	/// <summary>
+	/// The .sim output Project Fuel Type consumption calendar. Monthly consumption for: natural gas,
+	/// lpg, oil, coal, anthracite, dual fuel, smokeless, grid supplied electricity, biomass, biogass,
+	/// waste heat, and grid displaced electricity. It also has District Heating, but that's not a fuel
+	/// type directly and its instance-specific fuel type isn't defined in the .sim.
+	/// <para>Note: Must be attached separately using SetEndUseConsumerCalendar() from the SBEM
+	/// .sim or _sim.csv results.</para>
+	/// consumption.
+	/// </summary>
 	public FuelConsumptionCalendar FuelUseConsumerCalendar { get; protected set; }
+	/// <summary>
+	/// The .inp Activity Space definitions. These are one ore more physical spaces that share HVAC and
+	/// activity space type. They aren't necessarily a single physical space or even adjacent spaces. 
+	/// For example, there's nothing in the SBEM interface certification that say communal storage on
+	/// floors 1 and 12 of a 15 storey office can't be merged. Merging was preferable around 2008 due to
+	/// hardware limitations. The problem is confound by the MULTIPLIER or number of instances property,
+	/// that can group storage spaces 1 with 12, 2 with 5, and 3 with 8, as one ZONE.
+	/// </summary>
 	public SbemObjectSet<SbemZone> Zones { get; } = new();
-	public SimResult? PairedSimResult { get; protected set; }
+	/// <summary>
+	/// The .sim SimReult data created by SBEM. Attached using PairWithSimResult(). This contains End Use
+	/// demand, heat production, and renewables annual calendars. 12 month calendars 
+	/// </summary>
+	public SimResult? PairedSimResult { get; protected set; } 
+	/// <summary>
+	/// The .inp for on-site solar panels.
+	/// </summary>
     public SbemPvs Pvs { get; set; }
+	/// <summary>
+	/// Is there solar panels on-site?
+	/// </summary>
 	public bool hasPvs = false;
+	/// <summary>
+	/// The .in solar energy system for hot water.
+	/// </summary>
     public SbemSes Ses { get; set; }
-	protected bool hasSes = false;
-    public SbemWindGenerator WindGenerator { get; set; }
+	public bool HasSes { get => Ses != null; }
+	/// <summary>
+	/// has solar hot water?
+	/// </summary>
+	public bool HasPvs { get => Pvs != null; }
+	/// <summary>
+	/// The .inp wind turbine definition.
+	/// </summary>
+	public SbemWindGenerator WindGenerator { get; set; }
+	/// <summary>
+	/// The mysterious .inp object that hasn't had a single property
+	/// since before 2008.
+	/// </summary>
     public SbemRecProject RecProject { get; set; }
 
-    public bool HasSes { get; set; } = false;
-    public bool HasPvs { get; set; } = false;
-    public bool HasWindGenerator { get; set; } = false;
-
-	private List<SbemError> errors = new();
-
-	public static SbemModel CreateBasicModel()
-	{
-		return ParseInpContent(MIN_INP);
-	}
+	/// <summary>
+	/// Are there SbemWindGenerator on-site?
+	/// </summary>
+    public bool HasWindGenerator { get => WindGenerator != null; }
+	/// <summary>
+	/// Parse a .inp model into SbemModel from the filesystem.
+	/// </summary>
+	/// <param name="path"></param>
+	/// <returns></returns>
 	public static SbemModel ParseInpFile(string path)
 	{
 		if (!File.Exists(path))
@@ -106,6 +197,11 @@ AIR-CON-INSTALLED = No
 		string content = File.ReadAllText(path);
 		return ParseInpContent(content);
 	}
+	/// <summary>
+	/// Parse a .inp model into SbemModel from .inp file contents
+	/// </summary>
+	/// <param name="content"></param>
+	/// <returns></returns>
 	public static SbemModel ParseInpContent(string content)
 	{
 		var model = new SbemModel();
@@ -150,6 +246,11 @@ AIR-CON-INSTALLED = No
 				{
 					inObject = false;
 					var objectType = currentType;
+					/*
+					 * There's not really a clean way to do this with C# because it's strict typed
+					 * and it doesn't have Late Static Binding. So, we add an OBJECT_NAME and Object()
+					 * method to each class, even though it's not in the abstract SbemObject.
+					 */ 
 					switch (objectType)
 					{
 						case SbemCompliance.OBJECT_NAME:
@@ -181,7 +282,6 @@ AIR-CON-INSTALLED = No
 							model.ImprovementMeasures.Add(new SbemImprovementMeasure(currentName, currentProperties));
 							break;
 						case SbemPvs.OBJECT_NAME:
-							model.HasPvs = true;
 							model.Pvs = new SbemPvs(currentName, currentProperties);
 							break;
 						case SbemRecProject.OBJECT_NAME:
@@ -191,7 +291,6 @@ AIR-CON-INSTALLED = No
 							model.RecUsers.Add(new SbemRecUser(currentName, currentProperties));
 							break;
 						case SbemSes.OBJECT_NAME:
-							model.HasSes = true;
 							model.Ses = new SbemSes(currentName, currentProperties);
 							break;
 						case SbemShower.OBJECT_NAME:
@@ -204,7 +303,6 @@ AIR-CON-INSTALLED = No
 							currentZone.Walls.Add(currentWall);
 							break;
 						case SbemWindGenerator.OBJECT_NAME:
-							model.HasWindGenerator = true;
 							model.WindGenerator = new SbemWindGenerator(currentName, currentProperties);
 							break;
 						case SbemWindow.OBJECT_NAME:
@@ -223,9 +321,7 @@ AIR-CON-INSTALLED = No
 					}
 				}
 				else
-				{
 					currentProperties.Add(line);
-				}
 			}
 		}
 		/*
@@ -234,19 +330,40 @@ AIR-CON-INSTALLED = No
 		for (int zoneID = 0; zoneID < model.Zones.Length; zoneID++)
 		{
 			SbemZone zone = model.Zones[zoneID];
+			// Do DHW
+			zone.SetDhwGenerator(model.Dhws[zone.GetStringProperty("DHW-GENERATOR").QuotelessValue]);
+			// Do relationships for walls, doors, and windows.
 			for (int wallID = 0; wallID < zone.Walls.Length; wallID++)
 			{
 				SbemWall wall = zone.Walls[wallID];
 				model.Constructions[wall.GetStringProperty("CONSTRUCTION").QuotelessValue].AddWall(wall);
+				// Do SbemDoor
 				for (int doorID = 0; doorID < wall.Doors.Length; doorID++)
-					model.Constructions[wall.Doors[doorID].GetStringProperty("CONSTRUCTION").QuotelessValue].AddDoor(wall.Doors[doorID]);
+				{
+					string constructionName = wall.Doors[doorID].GetStringProperty("CONSTRUCTION").QuotelessValue;
+					model.Constructions[constructionName].AddDoor(wall.Doors[doorID]);
+					wall.SetConstruction(model.Constructions[constructionName]);
+				}
+				// Do SbemWindow
 				for (int windowID = 0; windowID < wall.Windows.Length; windowID++)
-					model.Glasses[wall.Windows[windowID].GetStringProperty("GLASS").QuotelessValue].AddWindow(wall.Windows[windowID]);
-
+				{
+					string glassName = wall.Windows[windowID].GetStringProperty("GLASS").QuotelessValue;
+					model.Glasses[glassName].AddWindow(wall.Windows[windowID]);
+					wall.Windows[windowID].SetGlass(model.Glasses[glassName]);
+				}
 			}
 		}
 		return model;
 	}
+	/// <summary>
+	/// Get the calendar difference SbemModel. The difference model is the base model
+	/// with its internal heat production, End Use, Fuel Type, and renewables energy
+	/// calendar set to the difference between the existing values and those in the 
+	/// calendars' counterparts another model. For example, you might retrofit the 
+	/// lighting then get the difference model to see how it affected End Use.
+	/// </summary>
+	/// <param name="inputModel"></param>
+	/// <returns></returns>
 	public SbemModel GetDifferenceModel(SbemModel inputModel)
 	{
 		SbemModel outputModel = Clone();
@@ -390,7 +507,4 @@ AIR-CON-INSTALLED = No
 		}
 		PHelper.PrintTable(table);
 	}
-
-
 	public void DropRecUsers() => RecUsers.Clear();
-} // Additional methods (like area calculations) can follow

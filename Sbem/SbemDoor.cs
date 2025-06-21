@@ -9,6 +9,12 @@ using System.Threading.Tasks;
 
 namespace MeesSDK.Sbem
 {
+	/// <summary>
+	/// External doors. Has SbemConstruction relationship.
+	/// <code>Relationships:
+	/// - Has one SbemConstruction
+	/// </code>
+	/// </summary>
 	public class SbemDoor : SbemSpatialObject
 	{
 		public const string OBJECT_NAME  = "DOOR"; 

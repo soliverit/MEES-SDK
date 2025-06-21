@@ -9,7 +9,6 @@ namespace MeesSDK.Sbem
 {
 	/// <summary>
 	/// Sim Result - where SBEM .sim output data is collated.
-	/// 
 	/// </summary>
 	public class SimResult
 	{
@@ -26,13 +25,37 @@ namespace MeesSDK.Sbem
 		public const string ZONE_INTERNAL_GAINS_REPORT_LABEL		= "REPORT- LD-I Details of Internal heat production for zone";
 		public const string PROJECT_RENEWWABLES_CO2_REPORT_LABEL	= "REPORT- CO2 emissions and primary energy equivalent to renewables-generated electricity";
 		public const string PROJECT_ENERGY_PERFORMANCE_REPORT_ABEL = "REPORT- PEPS Project Energy Performance. Delivered energy consumption";
+		/// <summary>
+		/// Project-level Fuel Type consumption calendar.
+		/// </summary>
 		public FuelConsumptionCalendar FuelCalendar { get; }
+		/// <summary>
+		/// Project-level End Use consumption calendar.
+		/// </summary>
 		public ConsumerConsumptionCalendar ConsumerCalendar { get; }
+		/// <summary>
+		/// HVAC-level End Use consumption calendars.
+		/// </summary>
 		public Dictionary<string, ConsumerConsumptionCalendar> HvacConsumerCalendars { get; } = new();
+		/// <summary>
+		/// HVAC-level Fuel Type consumption calendars.
+		/// </summary>
 		public Dictionary<string, FuelConsumptionCalendar> HvacFuelCalendars { get; } = new();
+		/// <summary>
+		/// Zone-level Internal Heat Production calendars.
+		/// </summary>
 		public Dictionary<string, InternalGainsCalendar> ZoneInternalGainsCalendars{ get; } = new();
+		/// <summary>
+		/// Zone-level Heating Demand calendars.
+		/// </summary>
 		public Dictionary<string, HeatingDemandCalendar> ZoneHeatingDemandCalendars { get; } = new();
+		/// <summary>
+		/// Zone-level Cooling Demand calendars.
+		/// </summary>
 		public Dictionary<string, CoolingDemandCalendar> ZoneCoolingDemandCalendars { get; } = new();
+		/// <summary>
+		/// Report any errors with the file here.
+		/// </summary>
 
 		public readonly List<string> Errors = new List<string>();
 		public SimResult(ConsumerConsumptionCalendar consumption, FuelConsumptionCalendar fuel)
@@ -40,6 +63,11 @@ namespace MeesSDK.Sbem
 			ConsumerCalendar	= consumption;
 			FuelCalendar		= fuel;
 		}
+		/// <summary>
+		/// Parse a .sim or _sim.csv file.
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		public static SimResult ParseSimFile(string path)
 		{
 			ConsumerConsumptionCalendar consumption	= new ConsumerConsumptionCalendar("Project");

@@ -54,32 +54,29 @@ namespace MeesSDK.Examples
 			 */
 			// Define the name of the RdSAPBuilding property that we're trying to estimate. 
 			string RDSAP_ESTIMATOR_TARGET_FEATURE = "DEPCEnergyEfficiency";
-			foreach (var building in buildings)
-			{
-				Console.WriteLine($"{building.WindowsOrdinalEnergyEfficiencyFloatForLightGBM}, {building.NumberOfWetRoomsFloatForLightGBM}, {building.HotWaterOrdinalEnergyEfficiencyFloatForLightGBM}");
-			}
+			//  Define the list of RdSAPBuilding properties that'll be used for training.
 			string[] RDSP_ESTIMATOR_FEATURES = new string[]
 			{
 				"ConstructionAgeIndexFloatForLightGBM",								// A to L as 0 to 10
 				"DEPCEnergyEfficiencyPotential"         ,						// Potential energy efficiency
-				"ExtensionCountFloatForLightGBM",									// Nuber of extnsions
-				//"NumberOfWetRoomsFloatForLightGBM",									// Number of wet rooms
-				//"NumberOfOpenFireplacesFloatForLightGBM",							// Numer of open fireplaces
+				"ExtensionCountFloatForLightGBM",									// Number of extensions
+				"NumberOfWetRoomsFloatForLightGBM",									// Number of wet rooms
+				"NumberOfOpenFireplacesFloatForLightGBM",							// Number of open fireplaces
 				"HotWaterOrdinalEnergyEfficiencyFloatForLightGBM",					// Hot water system efficiency 0 - 5
-				//"FloorOrdinalEnergyEfficiencyFloatForLightGBM",						// Floor construction efficiency 0 - 5
-				"WindowsOrdinalEnergyEfficiencyFloatForLightGBM"					// Windows efficiency 0 - 5
-				//"WallsOrdinalEnergyEfficiencyFloatForLightGBM",						// External walls efficiency 0 - 5
-				//"HeatingOrdinalEnergyEfficiencyFloatForLightGBM",					// Main heating system efficiency 0 - 5
-				//"HeatingControlOrdinalEnergyEfficiencyFloatForLightGBM",			// Heating controls efficiency 0 - 5
-				//"RoofOrdinalEnergyEfficiencyFloatForLightGBM",						// Roof efficiency 0 - 5
-				//"LightingOrdinalEnergyEfficiencyFloatForLightGBM",					// Fixed lighting efficiency 0 - 5
-				//"LowEnergyLighting",												// Percent lighting is low energy
-				//"HeatingCostPotential",												// Heating cost potential determined by RdSAP
-				//"GlassUValue", "FloorUValue",  "RoofUValue",   "WallUValue",	// U-Values W/m²K
-				//"TotalFloorArea",													// Net internal area m²
-				//"WindowArea",														// Window area (Calculated by SAP, not from assessor	
-				//"SolarPanelArea",													// Solar panel area m²
-				//"MainFuelFactor"													// Main heating fuel kgCO2/m²
+				"FloorOrdinalEnergyEfficiencyFloatForLightGBM",						// Floor construction efficiency 0 - 5
+				"WindowsOrdinalEnergyEfficiencyFloatForLightGBM",					// Windows efficiency 0 - 5
+				"WallsOrdinalEnergyEfficiencyFloatForLightGBM",						// External walls efficiency 0 - 5
+				"HeatingOrdinalEnergyEfficiencyFloatForLightGBM",					// Main heating system efficiency 0 - 5
+				"HeatingControlOrdinalEnergyEfficiencyFloatForLightGBM",			// Heating controls efficiency 0 - 5
+				"RoofOrdinalEnergyEfficiencyFloatForLightGBM",						// Roof efficiency 0 - 5
+				"LightingOrdinalEnergyEfficiencyFloatForLightGBM",					// Fixed lighting efficiency 0 - 5
+				"LowEnergyLighting",												// Percent lighting is low energy
+				"HeatingCostPotential",												// Heating cost potential determined by RdSAP
+				"GlassUValue", "FloorUValue",  "RoofUValue",   "WallUValue",		// U-Values W/m²K
+				"TotalFloorArea",													// Net internal area m²
+				"WindowArea",														// Window area (Calculated by SAP, not from assessor	
+				"SolarPanelArea",													// Solar panel area m²
+				"MainFuelFactor"													// Main heating fuel kgCO2/m²
 			};
 			// Build a LightGBMEstimator-friendly dataset from the D-EPC certificates
 			LightGBMInputData<RdSAPBuilding> mlData = LightGBMInputData<RdSAPBuilding>.FromList(RDSP_ESTIMATOR_FEATURES, buildings);

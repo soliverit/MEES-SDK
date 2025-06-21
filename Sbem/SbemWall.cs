@@ -9,9 +9,31 @@ using System.Threading.Tasks;
 
 namespace MeesSDK.Sbem
 {
+	/// <summary>
+	/// The .inp wall definition. Defines geometry, configurations and relationships.
+	/// <code>Relationships
+	/// - Has many SbemDoor
+	/// - Has many SbemWindow
+	/// - Has one SbemConstruction</code>
+	/// </summary>
+	//"Z0/01/si" = WALL
+	//	ORIENTATION = South
+	//	TYPE-ENV = Wall
+	//	MULTIPLIER = 1
+	//	LENGTH = 6.6
+	//	AREA = 25.74
+	//	CONSTRUCTION = "Int"
+	//	PITCH = 90
+	//	TYPE = Conditioned adjoining space
 	public class SbemWall : SbemSpatialObject
 	{
-		public const string OBJECT_NAME  = "WALL"; 
+		/// <summary>
+		/// C# doesn't have late static binding so we need to add this to all SbemObject.
+		/// </summary>
+		public const string OBJECT_NAME  = "WALL";
+		/// <summary>
+		/// C# doesn't have late static binding so we need to add this to all SbemObject.
+		/// </summary>
 		public override string ObjectName() { return OBJECT_NAME; }
 		public readonly SbemObjectSet<SbemWindow> Windows = new SbemObjectSet<SbemWindow>();
 		public readonly SbemObjectSet<SbemDoor> Doors = new SbemObjectSet<SbemDoor>();

@@ -10,6 +10,29 @@ using System.Threading.Tasks;
 
 namespace MeesSDK.Sbem
 {
+	/// <summary>
+	/// The .inp HVAC sytem.
+	/// <para>IMPORTANT NOTE: In most respects, HVAC-SYSTEM can be thought of
+	/// as fully qualified .inp models themselves. Accounting for Hot water and renewables
+	/// separately, you can rebuild EPC ratings from the individual HVAC-SYSTEM .inps </para>
+	/// </summary> 
+	//"Main System" = HVAC-SYSTEM
+	//	TYPE = Flued forced-convection air heaters
+	//	HEAT-SOURCE = Air heater
+	//	CHP = NO
+	//	FUEL-TYPE = Natural Gas
+	//	HEAT-REC-SYSTEM = No heat recovery
+	//	HEAT-REC-VAR-EFF = NO
+	//	VARIABLE-SPEED-PUMP = NO
+	//	SFP-CHECK = NO
+	//	ISBEM-ID = 11
+	//	HEAT-REC-SEFF = 0
+	//	HEAT-SSEFF = 0.821
+	//	AUX-ENERGY-CORR = 0
+	//	AUX-ENERGY/KWH = 0.02
+	//	HEAT-GEN-SEFF = 0.9
+	//	METERING = 0.95
+	//	..
 	public class SbemHvacSystem : SbemSpatialObject
 	{
 		/*

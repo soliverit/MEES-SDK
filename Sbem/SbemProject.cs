@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace MeesSDK.Sbem
 {
+	/// <summary>
+	/// The complete SBEM input / output model. Everything that goes into and comes out of
+	/// SBEM is modelled in here.
+	/// <code>- SbemModel[] (as-built, notional, and reference)
+	/// - SbemEpcModel[] (as-built)
+	/// - SbemErrorFile[] (as-built, notional, and reference)
+	/// - SimResult[] (as-built, notional, and reference)</code>
+	/// </summary>
 	public class SbemProject
 	{
 		public const string ACTUAL_SIM_FILE_NAME = "model.sim";
@@ -24,49 +32,68 @@ namespace MeesSDK.Sbem
 		public const string REFERENCE_EPC_INP_FILE_NAME = "model_ref.inp";
 		public const string REFERENCE_ERROR_FILE_NAME = "model_ref.err";
 
-		// Instance
-		
+		/// <summary>
+		/// The minimum constructor. Use BuildFromDirectory for complete instances.
+		/// </summary>
+		/// <param name="model"></param>
 		public SbemProject(SbemModel model) 
 		{
 			AsBuiltSbemModel	= model;
-
 		}
 		/// <summary>
 		/// For factory methods that create SbemProjects from stuff on the filesystem
 		/// </summary>
 		protected SbemProject()	{ }
+		/// <summary>
+		/// Attach the associated _epc.inp SbemModel.
+		/// </summary>
+		/// <param name="model"></param>
 		public void AddEpcInpModel(SbemEpcModel model)
 		{
 			AsBuiltSbemEpcModel	= model;
 		}
+		/// <summary>
+		/// Attach the as-built .sim SimResult that has the energy calendar data.
+		/// </summary>
+		/// <param name="simResult"></param>
+		/// <param name="pairWithInpModel"></param>
 		public void AddSimResult(SimResult simResult, bool pairWithInpModel)
 		{
 			AsBuiltSimResult = simResult;
 			if (pairWithInpModel)
 				AsBuiltSbemModel.PairWithSimResult(simResult);
 		}
+		/// <summary>
+		/// Attach the notional .sim SimResult that has the energy calendar data.
+		/// </summary>
 		public void AddNotionalSimResult(SimResult simResult, bool pairWithInpModel)
 		{
 			NotionalSimResult = simResult;
 			if (pairWithInpModel)
 				NotionalSbemModel.PairWithSimResult(simResult);
 		}
+		/// <summary>
+		/// Attach the reference .sim SimResult that has the energy calendar data.
+		/// </summary>
 		public void AddReferenceSimResult(SimResult simResult, bool pairWithInpModel)
 		{
 			ReferenceSimResult	= simResult;
 			if (pairWithInpModel)
 				ReferenceSbemModel.PairWithSimResult(simResult);
 		}
+		/// <summary>
+		/// Print errors to the console.
+		/// </summary>
 		public void PrintErrors()
 		{
 			Console.WriteLine($"{"Code",-24}{"Heating",50}");
 			foreach(SbemError error in AsBuiltSbemModel.Errors)
 				Console.WriteLine($"{error.Code,-24}{error.Message,50}");
 		}
-		// .inp models
-			/// <summary>
-			/// The As-Built .inp SBEM model. The thing that gets the EPC rating
-			/// </summary>
+
+		/// <summary>
+		/// The As-Built .inp SBEM model. The thing that SBEM processes.
+		/// </summary>
 		public SbemModel AsBuiltSbemModel{ get; set; }
 		/// <summary>
 		/// The Part L2A "notional" Reference model used to set benchmarks for the As-Built or retrofit scenario.
@@ -282,9 +309,8 @@ namespace MeesSDK.Sbem
 			if (!inServiceMode)
 				sbem.StopService();
 		}
-
 		/// <summary>
-		/// Buildng an SbemProject from the contents of a directory, where its assumed the directory contains
+		/// Building an SbemProject from the contents of a directory, where its assumed the directory contains
 		/// SBEM input and or output files: 
 		///<code>
 		/// Parse:

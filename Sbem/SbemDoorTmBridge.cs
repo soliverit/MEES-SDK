@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace MeesSDK.Sbem
 {
+	/// <summary>
+	/// Thermal bridge information for parent SbemDoor objects. Never seen one with
+	/// any properties.
+	/// </summary>
 	public class SbemDoorTmBridge : SbemObject
 	{
 		public const string OBJECT_NAME  = "DOOR-TM-BRIDGE"; 

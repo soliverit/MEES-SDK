@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MeesSDK.Sbem
 {
+	/// <summary>
+	/// A standrd error object. Nothing noteworthy.
+	/// </summary>
 	public class SbemError
 	{
 		public enum ErrorCode

@@ -8,6 +8,10 @@ using static MeesSDK.Sbem.SbemError;
 
 namespace MeesSDK.Sbem
 {
+	/// <summary>
+	/// The _epc.inp model. Same file format as .inp SbemModel with different objects
+	/// and couple of relationships.
+	/// </summary>
 	public class SbemEpcModel : SbemModelBase
 	{
 		public SbemBuildingData Actual { get; protected set; }
