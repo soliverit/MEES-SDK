@@ -76,8 +76,15 @@ namespace MeesSDK.DataManagement
 				}
 			}
 			int[][] retrofits	= new int[rows][];
-			for(int rowID = 0; rowID < rows; rowID++)
-				retrofits[rowID]	= Enumerable.Range(0, cols).ToArray();
+			for (int rowID = 0; rowID < rows; rowID++)
+			{
+				List<int> tempRetrofits = new List<int>();
+				for (int colID = 0; colID < cols; colID++)
+					if (transposedDiffs[rowID, colID] != -1)
+						tempRetrofits.Add(colID);
+				retrofits[rowID]		= tempRetrofits.ToArray();
+				Console.WriteLine(retrofits[rowID].Length);
+			}
 			// Create arrays
 			Costs		= Matrix.Build.DenseOfArray(transposedCosts);
 			Differences	= Matrix.Build.DenseOfArray(transposedDiffs);

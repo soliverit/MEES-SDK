@@ -44,12 +44,18 @@ namespace MeesSDK.Optimisation
 		/// </summary>
 		public int Generations { get; set; }				= 50;
 		/// <summary>
-		/// The probability of crossover
+		/// The probability of crossover. E.g 0.75 is a 75% chance to mix two chromosome. Otherwise, clone
+		/// the current one.
 		/// </summary>
-		public float CrossoverProbability { get; set; }		= 0.9f;
+		public float CrossoverProbability { get; set; }		= 0.75f;
+		/// <summary>
+		/// The probability of mutation. E.g. 0.1 is a 10% chance to change a gene's value.using
+		/// the MutationType method. Uniform random by default.
+		/// </summary>
+		public float MutationProbability { get; set; }		= 0.1f;
 
 		/// <summary>
-		/// The weight of each score. TODO: Add weighting.
+		/// The weight of each score.
 		/// </summary>
 		public float[] ObjectiveWeights { get; set; }		= new float[1] { 1.0f };
 		/// <summary>
@@ -64,6 +70,7 @@ namespace MeesSDK.Optimisation
 		public MutationBase MutationType { get; set; }			= new UniformMutation(true);
 		public SelectionBase SelectionType { get; set; }		= new EliteSelection();
 		public int[] RecordIDs { get; protected set; }
+		public GeneticSharpScoreSet Scores { get; protected set; }
 		public GeneticAlgorithmBase(MathNetRetrofitsTable data)
 		{
 			Data		= data;
@@ -94,27 +101,36 @@ namespace MeesSDK.Optimisation
 		public abstract int[] GetUpperBounds();
 		public void Run()
 		{
+			// Reset scores
+			Scores				= new GeneticSharpScoreSet();
+			// There's no subset processing so we can just do this here for now.
 			int[] ids			= Enumerable.Range(0, Data.Length).ToArray();
+			// Create a fresh population history
 			PopulationHistory   = new Population(InitialPopulationSize, MaximumPopulationSize, CreateChromosome());
+			// This calls the abstract GenetiAlgorithmBase Score() method.
 			FuncFitness fitness	= new FuncFitness(c =>
 			{
-				MixedIntegerChromosome f = c as MixedIntegerChromosome;
-				float[] scores	= Score(c);
-				float total		= 0;
+				MixedIntegerChromosome f	= c as MixedIntegerChromosome;
+				float[] scores				= Score(c);
+				float total					= 0;
+				// Dot product objectives 
 				for(int scoreID = 0; scoreID < scores.Length; scoreID++)
 					total	+= scores[scoreID] * ObjectiveWeights[scoreID];
-				Console.WriteLine($"Score: {total}");
+				Console.WriteLine($"Score: {-total}");
 				return total;
 			});
+			// Create the algorithm. Every can be update before calling this Run() call
 			Algorithm = new GeneticAlgorithm(
 				PopulationHistory,
 				fitness,
-				SelectionType,
-				CrossoverType,
-				MutationType
+				SelectionType,	// How candidates are selected after scoring
+				CrossoverType,	// How crossover is done
+				MutationType	// How values are mutated
 			);
+			Algorithm.CrossoverProbability	= CrossoverProbability;
+			Algorithm.MutationProbability   = MutationProbability;
+			Algorithm.Termination			= new GenerationNumberTermination(Generations);
 			Algorithm.Start();
-			Console.WriteLine("========= We made it! =========");
 		}
 	}
 }

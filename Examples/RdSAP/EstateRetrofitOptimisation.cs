@@ -23,11 +23,15 @@ namespace MeesSDK.Examples.RdSAP
 			// Load data
 			CsvHandler csvHandler = CsvHandler.ParseCSV(InputDataPath);
 			csvHandler.PrintErrors();
-
-
+			// Build the data set.	
 			MathNetRetrofitsTable data		= new MathNetRetrofitsTable(csvHandler, RdSAPRetrofitOption.ALL_RETROFIT_OPTION_KEYS.ToArray());
 			// Create a genetic algorithm
-			RdSAPEstateOptimiser optimiser = new RdSAPEstateOptimiser(data);
+			RdSAPEstateOptimiser optimiser	= new RdSAPEstateOptimiser(data);
+			optimiser.InitialPopulationSize = 50;
+			optimiser.MaximumPopulationSize = 100;
+			optimiser.MutationProbability	= 0.02f;
+			optimiser.Generations           = 5000;
+			// Optimise.
 			optimiser.Run();
 		}
 		public string GetDescription()
