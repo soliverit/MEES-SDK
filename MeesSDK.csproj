@@ -17,4 +17,8 @@
     <PackageReference Include="Microsoft.ML.LightGbm" Version="4.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Examples\Portfolio\" />
+  </ItemGroup>
+
 </Project>
