@@ -166,12 +166,23 @@ namespace MeesSDK.DataManagement
 			// Self-explanatory
 			return true;
 		}
+		/// <summary>
+		/// Get a columns values as floats.
+		/// </summary>
+		/// <param name="columnName"></param>
+		/// <returns></returns>
 		public float[] GetNumericColumnValues(string columnName)
 		{
 			if (!ColumnIsNumeric(columnName))
 				return Array.Empty<float>();
 			return NumericColumns[columnName];
 		}
+		
+		/// <summary>
+		/// Find corrupt cells in the string data 
+		/// </summary>
+		/// <param name="columnName"></param>
+		/// <returns></returns>
 		public List<int> FindCorruptNumberRowIndicesInColumn(string columnName)
 		{
 			// Where the corrupt cell's row ID goes
@@ -188,6 +199,9 @@ namespace MeesSDK.DataManagement
 			// Self-explanatory
 			return corruptIDs;
 		}
+		/// <summary>
+		/// Print all errors
+		/// </summary>
 		public void PrintErrors()
 		{
 			for (int i = 0; i < Errors.Count; i++)

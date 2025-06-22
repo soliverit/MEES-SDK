@@ -1,24 +1,17 @@
 ﻿using MeesSDK.RdSAP.Reference;
 using MeesSDK.RsSAP;
-using MeesSDK.Sbem;
 using MeesSDK.ML;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MeesSDK.Examples.RdSAP
 {
-	public class EstimateEmissionsAndRatings : IMeesSDKExample
+	public class RdSAPEstimation : IMeesSDKExample
 	{
 		/// <summary>
 		/// The path to the input certificates
 		/// </summary>
 		public string CertificatesPath { get; protected set; }
-		public EstimateEmissionsAndRatings(string path) { CertificatesPath  = path; }
+		public RdSAPEstimation(string path) { CertificatesPath  = path; }
 		/// <summary>
 		/// The estimator RunTheExample creates.
 		/// </summary>
@@ -56,7 +49,7 @@ namespace MeesSDK.Examples.RdSAP
 			string DEPC_REGISTER_DATA = "C:\\workspaces\\__shared_data__\\depc\\domestic-E06000002-Middlesbrough\\certificates.csv";
 			// Load the D-EPC register certificates.csv. The constructor with reference tells it to add some properties like U-Values
 			RdSAPBuildingSet buildings = RdSAPBuildingSet.LoadDataSet(DEPC_REGISTER_DATA, reference);
-			// Remvoe corrupt and incomplete records
+			// Remove corrupt and incomplete records
 			buildings.FilterCorrupt();
 			/*
 			 * Create a LightGBM estimator	

@@ -9,7 +9,7 @@ namespace MeesSDK.Chromosome
 {
 	/// <summary>
 	/// GeneticSharp doesn't natively support mixed domain integer problems. For example, 
-	/// where on building have 5 retrofits, another has 10. This class makes that possible.
+	/// where one building have 5 retrofits, another has 10. This class makes it possible.
 	/// </summary>
 	public class MixedIntegerChromosome : ChromosomeBase
 	{

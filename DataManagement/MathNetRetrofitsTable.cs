@@ -31,15 +31,16 @@ namespace MeesSDK.DataManagement
 		/*
 		 *  Instance Members
 		 */
+		public int Length { get => Retrofits.Length; }
 		protected CsvHandler CsvHandler { get; set; }
-		protected bool BuiltTables;
-		protected int[] ActiveBuildingMask;
-		protected int[][] Retrofits									=  Array.Empty<int[]>();
+		public bool BuiltTables;
+		public int[] ActiveBuildingMask;
+		public int[][] Retrofits									=  Array.Empty<int[]>();
 		protected Dictionary<string, int> RetrofitAliasedIndices	= new Dictionary<string, int>();
 		protected Dictionary<int, string> RetrofitIndexAliases		= new Dictionary<int, string>();
-		protected Matrix<float> Costs								= Matrix<float>.Build.Dense(0, 0);
-		protected Matrix<float> Differences							= Matrix<float>.Build.Dense(0, 0);
-		protected Dictionary<string, Vector<float>> DataTables		= new Dictionary<string, Vector<float>>();
+		public Matrix<float> Costs									= Matrix<float>.Build.Dense(0, 0);
+		public Matrix<float> Differences							= Matrix<float>.Build.Dense(0, 0);
+		public Dictionary<string, Vector<float>> DataTables			= new Dictionary<string, Vector<float>>();
 		/*
 		 *  Instance Methods
 		 */
@@ -63,10 +64,9 @@ namespace MeesSDK.DataManagement
 			// Transpose the table
 			int rows = CsvHandler.Length;
 			int cols = retrofitAliases.Length;
-
 			float[,] transposedCosts = new float[rows, cols];
 			float[,] transposedDiffs = new float[rows, cols];
-
+			
 			for (int columnID = 0; columnID < cols; columnID++)
 			{
 				for (int rowID = 0; rowID < rows; rowID++)
@@ -75,9 +75,13 @@ namespace MeesSDK.DataManagement
 					transposedDiffs[rowID, columnID] = diffs[columnID][rowID];
 				}
 			}
+			int[][] retrofits	= new int[rows][];
+			for(int rowID = 0; rowID < rows; rowID++)
+				retrofits[rowID]	= Enumerable.Range(0, cols).ToArray();
 			// Create arrays
 			Costs		= Matrix.Build.DenseOfArray(transposedCosts);
 			Differences	= Matrix.Build.DenseOfArray(transposedDiffs);
+			Retrofits   = retrofits;
 			// Make sure we don't build the tables again
 			BuiltTables = true;
 		}
@@ -107,17 +111,6 @@ namespace MeesSDK.DataManagement
 				sum += Costs[rows[i],columns[i]];
 			}
 			return sum;
-		}
-		public float Score(int[] rows, int[] columns)
-		{
-			float cost	= 0;
-			float diff = 0;
-			for (int i = 0; i < rows.Length; i++)
-			{
-				cost	+= Costs[rows[i], columns[i]];
-				diff	+= Differences[rows[i], columns[i]];
-			}
-			return -1 * cost / diff;
 		}
 	}
 }
