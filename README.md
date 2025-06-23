@@ -1,5 +1,5 @@
 # MEES-SDK
-A software development kit for developing Part L analysis platforms
+A software development kit for developing Part L analysis tools
 
 ## Highlights
 - SBEM modelling
