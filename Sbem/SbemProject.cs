@@ -259,23 +259,26 @@ namespace MeesSDK.Sbem
 			List<SbemRequest> requests	= new();
 			SbemModel baseModel			= model.Clone();
 			List<SbemZone> zones		= new();
-			// Delete the existing HVACs. Cuts back on the Clone time, doesn't really make a difference
-			baseModel.HvacSystems.Clear();
+			
 			// We're doing every HVAC
 			for (int hvacID = 0; hvacID < hvacs.Length; hvacID++)
 			{
 				SbemHvacSystem hvac					= hvacs[hvacID];
 				SbemObjectSet<SbemZone> tempZones	= hvac.Zones.Copy();
-				for(int zoneID = 0; zoneID <  hvac.Zones.Length; zoneID++)
+				for(int zoneID = 0; zoneID <  tempZones.Length; zoneID++)
 				{
+					// Delete the existing HVACs. Cuts back on the Clone time, doesn't really make a difference
+					baseModel.HvacSystems.Clear();
+					baseModel.Zones.Clear();
+					hvac.Zones.Clear();
+					SbemZone zone = tempZones[zoneID];
+					hvac.AddZone(zone);
+					baseModel.HvacSystems.Add(hvac);
 					// The SbemModel for the SbemZone
 					SbemModel singleZoneModel	= baseModel.Clone();
-					// House cleaning...
-					SbemZone zone				= tempZones[zoneID];
 					// Add the one HVAC System
 					singleZoneModel.HvacSystems.Add(hvac);
-					// Make sure there's no Zones then add this one.
-					hvac.Zones.Clear();
+					// Make sure there's no Zones then add this one.			
 					hvac.Zones.Add(zone);
 					// Track Zones in this method as well. Used for thread-safe calendar mapping later.
 					zones.Add(zone);

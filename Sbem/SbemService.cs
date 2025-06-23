@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace MeesSDK.Sbem
 {
@@ -189,7 +179,6 @@ namespace MeesSDK.Sbem
 					SbemProject newProject;
 					try
 					{
-						// Simulate calling SBEM
 						Console.WriteLine($"Doing SBEM Process for 1 of {Requests.Count} requests");
 						newProject	= BuildProject(request.Model);
 						request.Close(newProject, true);

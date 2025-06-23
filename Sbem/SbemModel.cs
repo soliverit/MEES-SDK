@@ -380,7 +380,7 @@ AIR-CON-INSTALLED = No
 				SbemZone otherZone = inputModel.Zones[zone.Name];
 				zone.HeatingEnergyDemandCalendar.Subtract(otherZone.HeatingEnergyDemandCalendar);
 				zone.CoolingEnergyDemandCalendar.Subtract(otherZone.CoolingEnergyDemandCalendar);
-				zone.InternalHeatGainsCalendar.Subtract(otherZone.InternalHeatGainsCalendar);
+				zone.InternalHeatProductionCalendar.Subtract(otherZone.InternalHeatProductionCalendar);
 			}
 		}
 		return outputModel;
@@ -452,7 +452,6 @@ AIR-CON-INSTALLED = No
 			clone.EndUseConsumerCalendar = EndUseConsumerCalendar.Clone();
 		if (FuelUseConsumerCalendar != null)
 			clone.FuelUseConsumerCalendar = FuelUseConsumerCalendar.Clone();
-
 		// Do all HVACS
 		for (int hvacID = 0; hvacID < HvacSystems.Length; hvacID++)
 		{
@@ -475,8 +474,8 @@ AIR-CON-INSTALLED = No
 			if (zone.CoolingEnergyDemandCalendar != null)
 				clone.Zones[zoneID].SetCoolingEnergyDemandCalendar(zone.CoolingEnergyDemandCalendar.Clone());
 			// Internal heat production calendar
-			if (zone.InternalHeatGainsCalendar != null)
-				clone.Zones[zoneID].SetInternalGainsCalendar(zone.InternalHeatGainsCalendar.Clone());
+			if (zone.InternalHeatProductionCalendar != null)
+				clone.Zones[zoneID].SetInternalGainsCalendar(zone.InternalHeatProductionCalendar.Clone());
 			// End Use and Fuel Type calendars
 			if (zone.EndUseConsumerCalendar!= null)
 				clone.Zones[zoneID].SetEndUseConsumerCalendar(zone.EndUseConsumerCalendar.Clone());

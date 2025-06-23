@@ -159,6 +159,7 @@ namespace MeesSDK.Sbem
 						FuelConsumptionCalendar fuel					= new FuelConsumptionCalendar("Project", area);
 						for (int rowID = 0; rowID < 12; rowID++)
 							fuel.AddRecord(FuelConsumptionRecord.FromLine(rows[rowID]));
+						simResult.SetProjectFuelTypeCalendar(fuel);
 					}else if (inHvacConsumer)
 					{
 						ConsumerConsumptionCalendar hvacConsumerCalendar = new ConsumerConsumptionCalendar(name, area);
@@ -223,9 +224,9 @@ namespace MeesSDK.Sbem
 		/// which is a lot more consistent than passing this calendar at SimResult constructor.</para>
 		/// </summary>
 		/// <param name="calendar"></param>
-		public void SetProjectFuelTypeCalendar(ConsumerConsumptionCalendar calendar)
+		public void SetProjectFuelTypeCalendar(FuelConsumptionCalendar calendar)
 		{
-			ConsumerCalendar    = calendar;
+			FuelCalendar    = calendar;
 		}
 	}
 }

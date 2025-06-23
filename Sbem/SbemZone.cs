@@ -81,7 +81,7 @@ namespace MeesSDK.Sbem
 		{
 
 		}
-		public InternalGainsCalendar InternalHeatGainsCalendar { get; protected set; }
+		public InternalGainsCalendar InternalHeatProductionCalendar { get; protected set; }
 		public HeatingDemandCalendar HeatingEnergyDemandCalendar { get; protected set; }
 		public CoolingDemandCalendar CoolingEnergyDemandCalendar { get; protected set; }
 		private float _wallArea = 0f;
@@ -98,7 +98,7 @@ namespace MeesSDK.Sbem
 		}
 		public void SetInternalGainsCalendar(InternalGainsCalendar internalGainsCalendar)
 		{
-			InternalHeatGainsCalendar	= internalGainsCalendar;
+			InternalHeatProductionCalendar	= internalGainsCalendar;
 		}
 		public void SetEndUseConsumerCalendar(ConsumerConsumptionCalendar consumerCalendar)
 		{
