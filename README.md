@@ -5,7 +5,7 @@ A software development kit for developing Part L analysis tools
 - SBEM modelling
 - Retrofit analysis
 - Estate optimisation tools (GeneticSharpBase, RdSAPEstimator
-- Nation optimisation tools (JAE-MOO, RdSAPEstateOptimiser)
+- Partitioned and threaded subset optimisation
 - Normalised DEPC-Register database with extensions
 - D-EPC register analysis (RdSAPBuilding, RdSAPBuildingSet. RdSAP.ORM
 - D-EPC register extensions. Thermal properties, geometries,
