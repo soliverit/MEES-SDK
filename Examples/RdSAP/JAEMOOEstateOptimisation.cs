@@ -18,6 +18,7 @@ namespace MeesSDK.Examples.RdSAP
 		}
 		public void RunTheExample()
 		{
+			Console.WriteLine("Committed this a bit early. Might fail 23/06/25");
 			// Load the data
 			CsvHandler csvHandler			= CsvHandler.ParseCSV(InputDataPath);
 			csvHandler.PrintErrors();
