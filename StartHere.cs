@@ -20,8 +20,15 @@ MathNet.Numerics.Control.UseNativeMKL();
 /*
  * Estate Optimisation
  */
-string optimiserData				= "C:\\workspaces\\MeesSDK\\data\\examples\\depc\\stockton\\data_100_rows.csv";
-IMeesSDKExample	optimiser			= new EstateRetrofitOptimisation(optimiserData);
+string optimiserDataPath			= "C:\\workspaces\\MeesSDK\\data\\examples\\depc\\stockton\\data_100_rows.csv";
+
+// Single set optimisation
+IMeesSDKExample optimiser = new EstateRetrofitOptimisation(optimiserDataPath);
+optimiser.PrintDescription();
+optimiser.RunTheExample();
+return; 
+// Subset 
+IMeesSDKExample	optfimiser			= new JAEMOOEstateOptimisation(optimiserDataPath);
 optimiser.PrintDescription();
 optimiser.RunTheExample();
 return;

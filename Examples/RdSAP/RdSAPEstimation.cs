@@ -29,7 +29,7 @@ namespace MeesSDK.Examples.RdSAP
 			 * Reference data was created from Part L, NCM(SBEM) Database, and 
 			 * educated guesses.
 			 */
-			string DEPC_REFERENCE_PATH = "c://workspaces/depc_emulator/data/";
+			string DEPC_REFERENCE_PATH = "C:\\workspaces\\MeesSDK\\data\\reference\\RdSAP\\";
 			RdSAPReferenceDataSet reference = RdSAPReferenceDataSet.Build(
 				DEPC_REFERENCE_PATH + "age_band_lookup.csv",		// Primary key
 				DEPC_REFERENCE_PATH + "floor_constructions.csv",    // Floor U-Value
@@ -37,7 +37,7 @@ namespace MeesSDK.Examples.RdSAP
 				DEPC_REFERENCE_PATH + "heating_controls.csv",       // Heating controls
 				DEPC_REFERENCE_PATH + "roof_constructions.csv",     // Roof U-Value
 				DEPC_REFERENCE_PATH + "wall_constructions.csv",     // Wall U-Value
-				DEPC_REFERENCE_PATH + "wall_thickness.csv",         // Wall thicknes 
+				DEPC_REFERENCE_PATH + "wall_thickness.csv",         // Wall thickness 
 				DEPC_REFERENCE_PATH + "window_parameters.csv"       // SAP window size built-form parameters
 			);
 			/*
