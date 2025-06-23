@@ -102,12 +102,12 @@ project.AsBuiltSbemModel.HvacSystems[0].Zones[0].FuelUseConsumerCalendar.Print()
  */
 // Clone the SbemModel and create a new NCM Lighting 5 (T8 lamp replacement) Retrofit
 NCMLighting5Example lightingRetrofit = new NCMLighting5Example(model.Clone());
-// Apply the Retrofit to the SbemModel
-lightingRetrofit.Apply();
-
 /*
  *  Applying the retrofit and retrieving the results.
  */
+// Apply the Retrofit to the SbemModel
+lightingRetrofit.Apply();
+
 // Run the new model through SBEM and get the SbemProject
 SbemProject retrofitProject        = sbem.BuildProject(lightingRetrofit.Model);
 
