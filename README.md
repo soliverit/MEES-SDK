@@ -5,7 +5,7 @@ A software development kit for developing Part L analysis tools
 - SBEM modelling
 - Retrofit analysis
 - Estate optimisation tools (GeneticSharpBase, RdSAPEstimator
-- Nation optimisation tools (JAE-MOO, RdSAPEstateOptimiser)
+- Partitioned and threaded subset optimisation
 - Normalised DEPC-Register database with extensions
 - D-EPC register analysis (RdSAPBuilding, RdSAPBuildingSet. RdSAP.ORM
 - D-EPC register extensions. Thermal properties, geometries,
@@ -102,12 +102,12 @@ project.AsBuiltSbemModel.HvacSystems[0].Zones[0].FuelUseConsumerCalendar.Print()
  */
 // Clone the SbemModel and create a new NCM Lighting 5 (T8 lamp replacement) Retrofit
 NCMLighting5Example lightingRetrofit = new NCMLighting5Example(model.Clone());
-// Apply the Retrofit to the SbemModel
-lightingRetrofit.Apply();
-
 /*
  *  Applying the retrofit and retrieving the results.
  */
+// Apply the Retrofit to the SbemModel
+lightingRetrofit.Apply();
+
 // Run the new model through SBEM and get the SbemProject
 SbemProject retrofitProject        = sbem.BuildProject(lightingRetrofit.Model);
 
@@ -153,7 +153,7 @@ public class NCMLighting5Example : RetrofitBase<SbemZone>
 			{
 				// Tell SBEM we're using efficacy then set the efficacy
 				zone.SetNumericProperty("LAMP-BALLAST-EFF", 60);
-				zone.SetStringProperty("LIGHT-TYPE", "LED");
+				zone.SetStringProperty("LIGHT-CASE", "CHOSEN");
 				AddModifiedObject(zone);
 			}
 		}
@@ -221,7 +221,6 @@ public class EstateRetrofitOptimisation : IMeesSDKExample
 	}
 }
 ```
-### Massive estate optimisation with JAE-MOO - just-add-estimates multi-objective optimisation (Residential example)
 ### RdSAP (estimator example)
 ```csharp
 /*
