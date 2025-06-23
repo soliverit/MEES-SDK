@@ -221,7 +221,6 @@ public class EstateRetrofitOptimisation : IMeesSDKExample
 	}
 }
 ```
-### Massive estate optimisation with JAE-MOO - just-add-estimates multi-objective optimisation (Residential example)
 ### RdSAP (estimator example)
 ```csharp
 /*
