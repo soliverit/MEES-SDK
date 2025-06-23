@@ -153,7 +153,7 @@ public class NCMLighting5Example : RetrofitBase<SbemZone>
 			{
 				// Tell SBEM we're using efficacy then set the efficacy
 				zone.SetNumericProperty("LAMP-BALLAST-EFF", 60);
-				zone.SetStringProperty("LIGHT-TYPE", "LED");
+				zone.SetStringProperty("LIGHT-CASE", "CHOSEN");
 				AddModifiedObject(zone);
 			}
 		}
