@@ -1,0 +1,10 @@
+alias,epochs,population,inequality,partitions,threads,constructor,retrofit_decay_factor,loop_alias,loop_path
+warmup_1,40,10,3320,3,3,L_SHADE,1.50,stockton_example,./loops
+warmup_2,20,20,3320,2,2,L_SHADE,2.00,stockton_example,./loops
+round_1,20,50,3320,2,2,L_SHADE,2.00,stockton_example,./loops
+round_2,20,50,3320,2,2,L_SHADE,2.00,stockton_example,./loops
+round_3,20,50,3320,2,2,L_SHADE,2.00,stockton_example,./loops
+round_4,50,100,3320,2,2,L_SHADE,2.00,stockton_example,./loops
+round_5,50,100,3320,2,2,L_SHADE,2.00,stockton_example,./loops
+round_6,100,150,3320,2,2,L_SHADE,2.00,stockton_example,./loops
+round_7,50,500,3320,2,3,L_SHADE,2.00,stockton_example,./loops
