@@ -19,7 +19,7 @@ namespace MeesSDK.Examples.Sbem
 			// The directory where SBEM projects will be processed. SBEM outputare are written here.
 			string SBEM_TARGET_DIRECTORY	= SBEM_DIRECTORY + "project\\";
 			// The .inp file that's being used for the example. 
-			string TEST_INP_MODEL_PATH		= "C:\\workspaces\\__shared_data__\\sbem_model_sandbox\\model.inp";
+			string TEST_INP_MODEL_PATH		= "C:\\workspaces\\MeesSDK\\data\\reference\\SBEM\\sample_project\\model.inp";
 			// The .sim output path.
 			string TEST_SIM_OUTPUT_PATH		= SBEM_TARGET_DIRECTORY + "model.sim";
 			/*
@@ -66,18 +66,14 @@ namespace MeesSDK.Examples.Sbem
 			Console.WriteLine(project.AsBuiltSbemEpcModel.Epc.ToString());
 			// Print the Project End Use consumer calendar to the console
 			project.AsBuiltSbemModel.EndUseConsumerCalendar.Print();
-			// Print an example HVAC Fuel Type consumption calendar
+			// Print an HVAC Fuel Type consumption calendar
 			project.AsBuiltSbemModel.HvacSystems[0].FuelUseConsumerCalendar.Print();
-			// Print an example Zone internal heat gains calendar
+			// Print a Zone internal heat gains calendar
 			project.AsBuiltSbemModel.HvacSystems[0].Zones[0].InternalHeatGainsCalendar.Print();
-			// Print an example Zone heating demand calendar
+			// Print a Zone heating demand calendar
 			project.AsBuiltSbemModel.HvacSystems[0].Zones[0].HeatingEnergyDemandCalendar.Print();
-			// Print an example Zone cooling demand calendar
+			// Print a Zone cooling demand calendar
 			project.AsBuiltSbemModel.HvacSystems[0].Zones[0].CoolingEnergyDemandCalendar.Print();
-			
-			/*====================================================================================
-			 * Create your own retrofit measures
-			==================================================================================== */
 			/*
 			 *  Creating and running Retrofits 
 			 */
@@ -93,7 +89,7 @@ namespace MeesSDK.Examples.Sbem
 			/*
 			 * Working with the Results
 			 */
-			// Build the difference model - A model whose calendars are the difference of the as-built and retrofitte SbemModel
+			// Build the difference model - A model whose calendars are the difference of the as-built and retrofitted SbemModel
 			SbemModel differenceModel = model.GetDifferenceModel(retrofitProject.AsBuiltSbemModel);
 			//Print the as-built End Use calendar
 			project.AsBuiltSbemModel.EndUseConsumerCalendar.Print();
@@ -102,6 +98,11 @@ namespace MeesSDK.Examples.Sbem
 			//Print the difference End Use calendar
 			differenceModel.EndUseConsumerCalendar.Print();
 		}
+
+
+
+
+
 		public string GetDescription()
 		{
 			return @"Working with SBEM data.
