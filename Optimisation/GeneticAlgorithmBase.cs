@@ -1,4 +1,4 @@
-﻿using GeneticSharp;
+﻿	using GeneticSharp;
 using MeesSDK.Chromosome;
 using MeesSDK.DataManagement;
 using System;
@@ -67,21 +67,33 @@ namespace MeesSDK.Optimisation
 		///	- CycleCrossover,...  </code>
 		/// </summary>
 		public ICrossover CrossoverType { get; set; }			= new UniformCrossover();
+		/// <summary>
+		/// GeneticSharp MutationBase
+		/// </summary>
 		public MutationBase MutationType { get; set; }			= new UniformMutation(true);
+		/// <summary>
+		/// GeneticSharp SelectionBase
+		/// </summary>
 		public SelectionBase SelectionType { get; set; }		= new EliteSelection();
+		/// <summary>
+		/// IDs of records in Data that are paired with the chromosome
+		/// </summary>
 		public int[] RecordIDs { get; protected set; }
+		/// <summary>
+		/// The score struct.
+		/// </summary>
 		public GeneticSharpScoreSet Scores { get; protected set; }
-		public GeneticAlgorithmBase(MathNetRetrofitsTable data)
+		public GeneticAlgorithmBase(MathNetRetrofitsTable data, int[] recordIDs)
 		{
 			Data		= data;
-			RecordIDs	= Enumerable.Range(0, data.Length).ToArray();
+			RecordIDs   = recordIDs;
 		}
 		/// <summary>
 		/// The fitness / score function. This determines how good a chromosome is.
 		/// </summary>
 		/// <param name="chromosome"></param>
 		/// <returns></returns>
-		public abstract float[] Score(IChromosome chromosome);
+		public abstract float[] Score(IChromosome chromosome, int[] recordIDs);
 		public virtual IChromosome CreateChromosome()
 		{
 			return new MixedIntegerChromosome(GetLowerBounds(), GetUpperBounds());
@@ -92,7 +104,7 @@ namespace MeesSDK.Optimisation
 		/// <returns></returns>
 		public virtual int[] GetLowerBounds()
 		{
-			return new int[Data.Length]; 
+			return new int[RecordIDs.Length]; 
 		}
 		/// <summary>
 		/// Get the maximum value for 
@@ -103,20 +115,17 @@ namespace MeesSDK.Optimisation
 		{
 			// Reset scores
 			Scores				= new GeneticSharpScoreSet();
-			// There's no subset processing so we can just do this here for now.
-			int[] ids			= Enumerable.Range(0, Data.Length).ToArray();
 			// Create a fresh population history
 			PopulationHistory   = new Population(InitialPopulationSize, MaximumPopulationSize, CreateChromosome());
 			// This calls the abstract GenetiAlgorithmBase Score() method.
 			FuncFitness fitness	= new FuncFitness(c =>
 			{
 				MixedIntegerChromosome f	= c as MixedIntegerChromosome;
-				float[] scores				= Score(c);
+				float[] scores				= Score(c, RecordIDs);
 				float total					= 0;
 				// Dot product objectives 
 				for(int scoreID = 0; scoreID < scores.Length; scoreID++)
 					total	+= scores[scoreID] * ObjectiveWeights[scoreID];
-				Console.WriteLine($"Score: {-total}");
 				return total;
 			});
 			// Create the algorithm. Every can be update before calling this Run() call

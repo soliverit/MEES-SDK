@@ -23,15 +23,14 @@ MathNet.Numerics.Control.UseNativeMKL();
 string optimiserDataPath			= "C:\\workspaces\\MeesSDK\\data\\examples\\depc\\stockton\\data_100_rows.csv";
 
 // Single set optimisation
-IMeesSDKExample optimiser = new EstateRetrofitOptimisation(optimiserDataPath);
+IMeesSDKExample optimiser			= new EstateRetrofitOptimisation(optimiserDataPath);
 optimiser.PrintDescription();
 optimiser.RunTheExample();
-return; 
-// Subset 
-IMeesSDKExample	optfimiser			= new JAEMOOEstateOptimisation(optimiserDataPath);
-optimiser.PrintDescription();
-optimiser.RunTheExample();
-return;
+
+// Subset optimisation
+//IMeesSDKExample	subsetOptimiser	= new JAEMOOEstateOptimisation(optimiserDataPath);
+//optimiser.PrintDescription();
+//optimiser.RunTheExample();
 
 /*
  * Working with SBEM
@@ -48,18 +47,3 @@ sbem.RunTheExample();
 IMeesSDKExample sbemDisaggregation	= new WorkingWithSBEM();
 sbemDisaggregation.PrintDescription();
 sbemDisaggregation.RunTheExample();
-/*
- * Working with the EPC register: RdSAP efficiency estimation.
- */
-// Download any D-EPC records from here https://epc.opendatacommunities.org/domestic/search
-string certificatesPath				= "c:/workspaces/__shared_data__/depc/domestic-E06000002-Middlesbrough/certificates.csv";
-IMeesSDKExample rdSAPEstimation		= new RdSAPEstimation(certificatesPath);
-rdSAPEstimation.PrintDescription();
-rdSAPEstimation.RunTheExample();
-/*
- *  Estate optimisation: Residential retrofit strategy
- */
-string retrofitCertificatesPath		= "c:/workspaces/MeesSDK/examples/stockton/data.csv";
-IMeesSDKExample estateOptimisation	= new EstateRetrofitOptimisation(certificatesPath);
-estateOptimisation.PrintDescription();
-estateOptimisation.RunTheExample();
