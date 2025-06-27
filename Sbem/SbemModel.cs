@@ -153,7 +153,7 @@ AIR-CON-INSTALLED = No
 	/// <summary>
 	/// The .inp for on-site solar panels.
 	/// </summary>
-	public SbemPvs Pvs { get; set; }
+	public SbemObjectSet<SbemPvs> Pvs { get; } = new();
 	/// <summary>
 	/// Is there solar panels on-site?
 	/// </summary>
@@ -282,7 +282,7 @@ AIR-CON-INSTALLED = No
 							model.ImprovementMeasures.Add(new SbemImprovementMeasure(currentName, currentProperties));
 							break;
 						case SbemPvs.OBJECT_NAME:
-							model.Pvs = new SbemPvs(currentName, currentProperties);
+							model.Pvs.Add(new SbemPvs(currentName, currentProperties));
 							break;
 						case SbemRecProject.OBJECT_NAME:
 							model.RecProject = new SbemRecProject(currentName, currentProperties);
@@ -417,26 +417,24 @@ AIR-CON-INSTALLED = No
 		content.AppendLine(General.ToString());
 		content.AppendLine(Compliance.ToString());
 
-		foreach (var obj in Constructions.Objects)
-			content.AppendLine(obj.ToString());
-
-		foreach (var obj in Glasses.Objects)
-			content.AppendLine(obj.ToString());
-
+		foreach (SbemConstruction construction in Constructions.Objects)
+			content.AppendLine(construction.ToString());
+		foreach (SbemGlass glass in Glasses.Objects)
+			content.AppendLine(glass.ToString());
+		foreach (SbemPvs pvs in Pvs)
+			content.AppendLine(pvs.ToString());
 		if (HasSes) content.AppendLine(Ses.ToString());
-		if (HasPvs) content.AppendLine(Pvs.ToString());
 		if (HasWindGenerator) content.AppendLine(WindGenerator.ToString());
-
-		foreach (var obj in Showers.Objects)
-			content.AppendLine(obj.ToString());
-		foreach (var obj in Dhws.Objects)
-			content.AppendLine(obj.ToString());
-		foreach (var obj in HvacSystems.Objects)
-			content.AppendLine(obj.ToString());
-		foreach (var obj in RecUsers.Objects)
-			content.AppendLine(obj.ToString());
-		foreach (var obj in ImprovementMeasures.Objects)
-			content.AppendLine(obj.ToString());
+		foreach (SbemShower shower in Showers.Objects)
+			content.AppendLine(shower.ToString());
+		foreach (SbemDhwGenerator dhw in Dhws.Objects)
+			content.AppendLine(dhw.ToString());
+		foreach (SbemHvacSystem hvac in HvacSystems.Objects)
+			content.AppendLine(hvac.ToString());
+		foreach (SbemRecUser recUser in RecUsers.Objects)
+			content.AppendLine(recUser.ToString());
+		foreach (SbemImprovementMeasure improvementMeasure in ImprovementMeasures.Objects)
+			content.AppendLine(improvementMeasure.ToString());
 		return content.ToString();
 	}
 	/// <summary>

@@ -65,11 +65,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Central heat generator(s) with water distribution",
-				HVAC_vent_text = "For this HVAC system, Ventilation is defined at zone level",
-				HVAC_cool_text = "This HVAC system does not provide cooling",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "For this HVAC system, Ventilation is defined at zone level",
+				HVACCoolText = "This HVAC system does not provide cooling",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Central heating using air distribution"] = new HvacSystemType
 			{
@@ -111,11 +111,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Central heat generator(s) with air distribution",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "This HVAC system does not provide cooling",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "This HVAC system does not provide cooling",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Other local room heater - fanned"] = new HvacSystemType
 			{
@@ -157,11 +157,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Includes (fanned) gas fires, gas convectors, direct electric heaters, electric storage heaters.",
-				HVAC_vent_text = "For this HVAC system, Ventilation is defined at zone level",
-				HVAC_cool_text = "This HVAC system does not provide cooling",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "For this HVAC system, Ventilation is defined at zone level",
+				HVACCoolText = "This HVAC system does not provide cooling",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Fan coil systems"] = new HvacSystemType
 			{
@@ -203,11 +203,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Local fanned terminal units in ceiling, on wall or on floor, with a central chilled water supply. May include fresh air supply. Systems may be 2-pipe, 3-pipe or 4-pipe, changeover or non-changeover - no distinction is made here. Assumed to also provide heating.",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Constant volume system (fixed fresh air rate)"] = new HvacSystemType
 			{
@@ -249,11 +249,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "An all-air system in which the volume of supply air is fixed, though the proportion of fresh and recirculated air may vary. modulated to match the cooling demand. Assumed to also provide heating, possibly also with separate perimeter heating systemIf provided with local reheat capability use \"Terminal reheat\" option. This category includes packaged rooftop units.",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Constant volume system (variable fresh air rate)"] = new HvacSystemType
 			{
@@ -295,11 +295,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Constant volume system in which the proportion of fresh air can be varied to limit chiller operation (\"free cooling economiser\")",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Single-duct VAV"] = new HvacSystemType
 			{
@@ -341,11 +341,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "An all-air system in which the volume of supply air is modulated to match the cooling demand. May have reheat capability. Assumed to also provide heating, possibly also with separate perimeter heating system",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Split or multi-split system"] = new HvacSystemType
 			{
@@ -387,11 +387,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Combination of outdoor and indoor units connected by refrigrerant pipework. No mechanical ventilation system. Use this category also for ducted split systems and window/wall units",
-				HVAC_vent_text = "For this HVAC system, Ventilation is defined at zone level",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "For this HVAC system, Ventilation is defined at zone level",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Split or multi-split system with ventilation"] = new HvacSystemType
 			{
@@ -433,11 +433,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Combination of outdoor and indoor units connected by refrigrerant pipework. Serate mechanical ventilation system. Use this category also for ducted split systems and window/wall units",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Variable refrigerant flow"] = new HvacSystemType
 			{
@@ -479,11 +479,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "A type of split or multi-split system that includes provision to vary the circulation of refrigerant according to the load. Assumed to also provide heating. May be gas-fired",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Chilled ceilings or passive chilled beams and displacement ventilation"] = new HvacSystemType
 			{
@@ -525,11 +525,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "The combination of a chilled ceiling (or passive chilled beam) system with a separate low-level, low volume supply of cooled ventilation air. Heating assumed to be by separate LTHW system.",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Active chilled beams"] = new HvacSystemType
 			{
@@ -571,11 +571,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Chilled beams which include the provision of cooled air from a central source, typically operating as an induction system. May include local fans.Heating assumed to be by separate LTHW system.",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Water loop heat pump"] = new HvacSystemType
 			{
@@ -617,11 +617,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Local heat pumps are served by a common water circuit to or from which they can reject or extract heat. Central cooling and heating plant provides the net heat or cooling input to this circuit. Assumed to also provide heating.",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Induction system"] = new HvacSystemType
 			{
@@ -663,11 +663,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Air is supplied from a central unit, commonly at high pressure. This induces a secondary airflow within the terminal unit to achieve an acceptable delivery temperature. Final heating or cooling is provided by heat exchangers within the terminal.Systems may be 2-pipe, 3-pipe or 4-pipe, changeover or non-changeover - no distinction is made here. Assumed to also provide heating.",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Dual duct (constant volume)"] = new HvacSystemType
 			{
@@ -709,11 +709,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Hot and old air are distributed separately - commonly at hgh pressure - and locally mixed to provide the desired supply temperature for each zone. Assumed to also provide heating, possibly also with separate perimeter heating system",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Multizone (hot deck/cold deck)"] = new HvacSystemType
 			{
@@ -755,11 +755,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "A central air handling unit has separate hot and cold decks. Mixing takes place at the Air handling unit and air is supplied to each zone through a single duct per zone. Assumed to also provide heating, possibly also with separate perimeter heating system",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Terminal reheat (constant volume)"] = new HvacSystemType
 			{
@@ -801,11 +801,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Cooled air is supplied centrally and reheated locally to the desired supply temperature for each zone. Assumed to also provide heating, possibly also with separate perimeter heating system",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["embedded system"] = new HvacSystemType
 			{
@@ -847,11 +847,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["No Heating or Cooling"] = new HvacSystemType
 			{
@@ -893,11 +893,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 1.0f,
 				tACtrld = 1,
 				DESCRIPTION = "",
-				HVAC_vent_text = "For this HVAC system, Ventilation is defined at zone level",
-				HVAC_cool_text = "This HVAC system does not provide cooling",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "For this HVAC system, Ventilation is defined at zone level",
+				HVACCoolText = "This HVAC system does not provide cooling",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Central heating using water: convectors"] = new HvacSystemType
 			{
@@ -939,11 +939,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Central heat generator(s) with water distribution",
-				HVAC_vent_text = "For this HVAC system, Ventilation is defined at zone level",
-				HVAC_cool_text = "This HVAC system does not provide cooling",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "For this HVAC system, Ventilation is defined at zone level",
+				HVACCoolText = "This HVAC system does not provide cooling",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Central heating using water: floor heating"] = new HvacSystemType
 			{
@@ -985,11 +985,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Central heat generator(s) with water distribution",
-				HVAC_vent_text = "For this HVAC system, Ventilation is defined at zone level",
-				HVAC_cool_text = "This HVAC system does not provide cooling",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "For this HVAC system, Ventilation is defined at zone level",
+				HVACCoolText = "This HVAC system does not provide cooling",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Unflued radiant heater"] = new HvacSystemType
 			{
@@ -1031,11 +1031,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Luminous or non-luminous overhead radiant heater without flue. Includes electric overhead radiant heaters",
-				HVAC_vent_text = "For this HVAC system, Ventilation is defined at zone level",
-				HVAC_cool_text = "This HVAC system does not provide cooling",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "",
-				ZONE_vent_unflued_warning = "Warning: With an unflued system serving this zone you must select mechanical ventilation"
+				HVACVentText = "For this HVAC system, Ventilation is defined at zone level",
+				HVACCoolText = "This HVAC system does not provide cooling",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "",
+				ZoneVentUnfluedWarning = "Warning: With an unflued system serving this zone you must select mechanical ventilation"
 			},
 			["Flued radiant heater"] = new HvacSystemType
 			{
@@ -1077,11 +1077,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Luminous or non-luminous overhead radiant heater with flue",
-				HVAC_vent_text = "For this HVAC system, Ventilation is defined at zone level",
-				HVAC_cool_text = "This HVAC system does not provide cooling",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "For this HVAC system, Ventilation is defined at zone level",
+				HVACCoolText = "This HVAC system does not provide cooling",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Multiburner radiant heaters"] = new HvacSystemType
 			{
@@ -1123,11 +1123,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Overhead multiburner radiant heater",
-				HVAC_vent_text = "For this HVAC system, Ventilation is defined at zone level",
-				HVAC_cool_text = "This HVAC system does not provide cooling",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "For this HVAC system, Ventilation is defined at zone level",
+				HVACCoolText = "This HVAC system does not provide cooling",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Flued forced-convection air heaters"] = new HvacSystemType
 			{
@@ -1169,11 +1169,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "May have fan to assist transportation of combustionair and/or combustion products",
-				HVAC_vent_text = "For this HVAC system, Ventilation is defined at zone level",
-				HVAC_cool_text = "This HVAC system does not provide cooling",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "For this HVAC system, Ventilation is defined at zone level",
+				HVACCoolText = "This HVAC system does not provide cooling",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Unflued forced-convection air heaters"] = new HvacSystemType
 			{
@@ -1215,11 +1215,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Includes \"direct\" gas heaters and electric heaters. ",
-				HVAC_vent_text = "For this HVAC system, Ventilation is defined at zone level",
-				HVAC_cool_text = "This HVAC system does not provide cooling",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "",
-				ZONE_vent_unflued_warning = "Warning: With an unflued system serving this zone you must select mechanical ventilation"
+				HVACVentText = "For this HVAC system, Ventilation is defined at zone level",
+				HVACCoolText = "This HVAC system does not provide cooling",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "",
+				ZoneVentUnfluedWarning = "Warning: With an unflued system serving this zone you must select mechanical ventilation"
 			},
 			["Dual-duct VAV"] = new HvacSystemType
 			{
@@ -1261,11 +1261,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "A VAV system with separate supply of hot and cold air.Assumed to also provide heating, possibly also with separate perimeter heating system",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Indoor packaged cabinet (VAV)"] = new HvacSystemType
 			{
@@ -1307,11 +1307,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Local cooling/heating unit. May supplying air directly into room, into underfloor void, or into ceiling void.  . May have terminal units with variable local recirculation rate. May have electrical trim heater. Volume of air handled is sufficent to handle all the cooling load. Assumed to also provide heating, possibly also with separate perimeter heating system",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Single room cooling system"] = new HvacSystemType
 			{
@@ -1353,11 +1353,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Combination of outdoor and indoor units connected by refrigrerant pipework. No mechanical ventilation system. Use this category also for ducted split systems and window/wall units",
-				HVAC_vent_text = "For this HVAC system, Ventilation is defined at zone level",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "For this HVAC system, Ventilation is defined at zone level",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Other local room heater - unfanned"] = new HvacSystemType
 			{
@@ -1399,11 +1399,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "Includes (unfanned) gas fires, gas convectors, direct electric heaters, electric storage heaters.",
-				HVAC_vent_text = "For this HVAC system, Ventilation is defined at zone level",
-				HVAC_cool_text = "This HVAC system does not provide cooling",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "For this HVAC system, Ventilation is defined at zone level",
+				HVACCoolText = "This HVAC system does not provide cooling",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Chilled ceilings or passive chilled beams and mixing ventilation"] = new HvacSystemType
 			{
@@ -1445,11 +1445,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "The combination of a chilled ceiling (or passive chilled beam) system with a separate low-level, low volume supply of cooled ventilation air. Heating assumed to be by separate LTHW system.",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			},
 			["Passive chilled beams"] = new HvacSystemType
 			{
@@ -1491,11 +1491,11 @@ namespace MeesSDK.Sbem
 				tACtrl2 = 0.95f,
 				tACtrld = 1,
 				DESCRIPTION = "The combination of a chilled ceiling (or passive chilled beam) system with a separate low-level, low volume supply of cooled ventilation air. Heating assumed to be by separate LTHW system.",
-				HVAC_vent_text = "",
-				HVAC_cool_text = "",
-				HVAC_syst_adj = -1,
-				ZONE_vent_text = "Ventilation is defined at HVAC level",
-				ZONE_vent_unflued_warning = ""
+				HVACVentText = "",
+				HVACCoolText = "",
+				HVACSystemAdjustment = -1,
+				ZoneVentText = "Ventilation is defined at HVAC level",
+				ZoneVentUnfluedWarning = ""
 			}
 		};
 		// Instance members
@@ -1539,26 +1539,17 @@ namespace MeesSDK.Sbem
 		public float tACtrl2;
 		public float tACtrld;
 		public string DESCRIPTION = "";
-		public string HVAC_vent_text = "";
-		public string HVAC_cool_text = "";
-		public float HVAC_syst_adj;
-		public string ZONE_vent_text = "";
-		public string ZONE_vent_unflued_warning = "";
+		public string HVACVentText = "";
+		public string HVACCoolText = "";
+		public float HVACSystemAdjustment;
+		public string ZoneVentText = "";
+		public string ZoneVentUnfluedWarning = "";
 
 		// Instance methods
-		public bool HasHeating()
-		{
-			return CODE != NO_HEATING_OR_COOLING;
-		}
+		public bool HasHeating { get => CODE != NO_HEATING_OR_COOLING; }
 
-		public bool HasCooling()
-		{
-			return HVAC_cool_text != NO_COOLING_TEXT;
-		}
+		public bool HasCooling { get => HVACCoolText != NO_COOLING_TEXT; }
 
-		public bool HasMechanicalVentilation()
-		{
-			return HVAC_vent_text != NO_MECH_VENTILATION_TEXT;
-		}
+		public bool HasMechanicalVentilation { get => HVACVentText != NO_MECH_VENTILATION_TEXT; }
 	}
 }

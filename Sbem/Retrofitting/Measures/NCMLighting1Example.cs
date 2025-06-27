@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 
 namespace MeesSDK.Sbem.Retrofitting.Measures
 {
-	public class NCMLighting5Example : RetrofitBase
+	public class NCMLighting1Example : RetrofitBase
 	{
-		public NCMLighting5Example(SbemModel sbemModel) : base(sbemModel) { }
+		public NCMLighting1Example(SbemModel sbemModel) : base(sbemModel) { }
+		/// <summary>
+		/// The SbemZone LIGHT-TYPE keyword for T12 lamps
+		/// </summary>
+		public const string T12_KEYWORD = "T12 Fluorescent - halophosphate - low frequency ballast";
 		/// <summary>
 		/// Apply the retrofit, track the modified objects.
 		/// </summary>
@@ -28,10 +32,10 @@ namespace MeesSDK.Sbem.Retrofitting.Measures
 			{
 				SbemZone zone = Model.Zones[zoneID];
 				// Skip zones with lighting not defined by template
-				if (zone.GetStringProperty("LIGHT-CASE").Value != "UNKNOWN")
+				if (! zone.PropertyEquals("LIGHT-CASE", "UNKNOWN"))
 					continue;
 				// Replace T8 lamps
-				if (zone.GetStringProperty("LIGHT-TYPE").Value.StartsWith("T8"))
+				if (zone.PropertyEquals("LIGHT-TYPE", T12_KEYWORD))
 				{
 					// Tell SBEM we're using efficacy then set the efficacy
 					zone.SetNumericProperty("LAMP-BALLAST-EFF", 60);

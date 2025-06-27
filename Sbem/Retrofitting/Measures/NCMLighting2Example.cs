@@ -1,6 +1,4 @@
-﻿using MeesSDK.DataManagement;
-using MeesSDK.RdSAP.Reference;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MeesSDK.Sbem.Retrofitting.Measures
 {
-	public class NCMLighting5Example : RetrofitBase
+	public class NCMLighting2Example : RetrofitBase
 	{
-		public NCMLighting5Example(SbemModel sbemModel) : base(sbemModel) { }
+		public NCMLighting2Example(SbemModel sbemModel) : base(sbemModel) { }
 		/// <summary>
 		/// Apply the retrofit, track the modified objects.
 		/// </summary>
@@ -31,7 +29,7 @@ namespace MeesSDK.Sbem.Retrofitting.Measures
 				if (zone.GetStringProperty("LIGHT-CASE").Value != "UNKNOWN")
 					continue;
 				// Replace T8 lamps
-				if (zone.GetStringProperty("LIGHT-TYPE").Value.StartsWith("T8"))
+				if (zone.GetStringProperty("LIGHT-TYPE").Value == "Tungsten or Halogen2")
 				{
 					// Tell SBEM we're using efficacy then set the efficacy
 					zone.SetNumericProperty("LAMP-BALLAST-EFF", 60);

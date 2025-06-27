@@ -3,14 +3,20 @@ using MeesSDK.RdSAP.Reference;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MeesSDK.Sbem.Retrofitting.Measures
 {
-	public class NCMLighting5Example : RetrofitBase
+	public class NCMLighting6Example : RetrofitBase
 	{
-		public NCMLighting5Example(SbemModel sbemModel) : base(sbemModel) { }
+		public NCMLighting6Example(SbemModel sbemModel) : base(sbemModel) { }
+
+		/// <summary>
+		/// The SbemZone LIGHT-TYPE keyword for high-pressure sodium
+		/// </summary>
+		public const string HPS_KEYWORD = "High Pressure Sodium";
 		/// <summary>
 		/// Apply the retrofit, track the modified objects.
 		/// </summary>
@@ -18,20 +24,19 @@ namespace MeesSDK.Sbem.Retrofitting.Measures
 		{
 			/*
 			 * There's nothing complicated. Iterate over the zones and
-			 * update the ones that have T8s.
+			 * update the ones that have high-pressure sodium lamps
 			 * 
 			 * Important: make sure to AddModifiedObject(modifiedZone) for costs
-			 * and schedules later
 			 */
-			// Check all Zones for T8s
+			// Check all Zones for hpS lamps
 			for (int zoneID = 0; zoneID < Model.Zones.Length; zoneID++)
 			{
 				SbemZone zone = Model.Zones[zoneID];
 				// Skip zones with lighting not defined by template
-				if (zone.GetStringProperty("LIGHT-CASE").Value != "UNKNOWN")
+				if (! zone.PropertyEquals("LIGHT-CASE", "UNKNOWN"))
 					continue;
-				// Replace T8 lamps
-				if (zone.GetStringProperty("LIGHT-TYPE").Value.StartsWith("T8"))
+				// Replace high-pressure mercury and high-pressure sodium lamps
+				if (zone.PropertyEquals("LIGHT-TYPE", HPS_KEYWORD))
 				{
 					// Tell SBEM we're using efficacy then set the efficacy
 					zone.SetNumericProperty("LAMP-BALLAST-EFF", 60);

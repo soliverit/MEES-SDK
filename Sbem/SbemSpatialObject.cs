@@ -14,7 +14,11 @@ namespace MeesSDK.Sbem
 		/// <summary>
 		/// Area (m²). Not specific. Can be floor space, wall, window, solar panel,...
 		/// </summary>
-		public float Area { get; protected set; }
+		public virtual float Area { get; protected set; }
+		/// <summary>
+		/// Area (m²) excluding embedded windows and doors
+		/// </summary>
+		public virtual float SurfaceArea{ get; protected set; }
 		public SbemSpatialObject(string name, List<string> properties) : base(name, properties) 
 		{
 			// Some objects have an area in their definition

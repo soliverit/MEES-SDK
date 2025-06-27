@@ -19,7 +19,7 @@ namespace MeesSDK.Examples.Sbem
 			// The directory where SBEM projects will be processed. SBEM outputare are written here.
 			string SBEM_TARGET_DIRECTORY	= SBEM_DIRECTORY + "project\\";
 			// The .inp file that's being used for the example. 
-			string TEST_INP_MODEL_PATH		= "C:\\workspaces\\MeesSDK\\data\\reference\\SBEM\\sample_project\\model.inp";
+			string TEST_INP_MODEL_PATH		= "C:\\workspaces\\__shared_data__\\graham_hill\\model.inp";
 			// The .sim output path.
 			string TEST_SIM_OUTPUT_PATH		= SBEM_TARGET_DIRECTORY + "model.sim";
 			/*
@@ -69,7 +69,7 @@ namespace MeesSDK.Examples.Sbem
 			// Print an HVAC Fuel Type consumption calendar
 			project.AsBuiltSbemModel.HvacSystems[0].FuelUseConsumerCalendar.Print();
 			// Print a Zone internal heat gains calendar
-			project.AsBuiltSbemModel.HvacSystems[0].Zones[0].InternalHeatGainsCalendar.Print();
+			project.AsBuiltSbemModel.HvacSystems[0].Zones[0].InternalHeatProductionCalendar.Print();
 			// Print a Zone heating demand calendar
 			project.AsBuiltSbemModel.HvacSystems[0].Zones[0].HeatingEnergyDemandCalendar.Print();
 			// Print a Zone cooling demand calendar

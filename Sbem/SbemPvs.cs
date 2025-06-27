@@ -11,7 +11,7 @@ namespace MeesSDK.Sbem
 	/// <summary>
 	/// The .inp solar panel (PhotoVoltaic System) definition. Defines area, composition, 
 	/// </summary>
-	public class SbemPvs : SbemObject
+	public class SbemPvs : SbemSpatialObject
 	{
 		public const string OBJECT_NAME  = "PVS"; 
 		public override string ObjectName() { return OBJECT_NAME; }

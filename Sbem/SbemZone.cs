@@ -121,7 +121,7 @@ namespace MeesSDK.Sbem
 			{
 				var wall = Walls.Objects[wallID];
 				_wallArea += wall.Area;
-				_wallSurfaceArea += wall.SurfaceArea();
+				_wallSurfaceArea += wall.SurfaceArea;
 				_windowArea += wall.WindowArea();
 			}
 

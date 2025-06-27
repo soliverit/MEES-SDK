@@ -30,25 +30,54 @@ namespace MeesSDK.Sbem
 		/// <summary>
 		/// C# doesn't have late static binding so we need to add this to all SbemObject.
 		/// </summary>
-		public const string OBJECT_NAME  = "WALL";
+		public const string OBJECT_NAME		= "WALL";
+		/// <summary>
+		/// SbemWall TYPE property for external walls
+		/// </summary>
+		public const string EXTERIOR_WALL	= "Exterior";
+		/// <summary>
+		/// SbemWall TYPE-ENV for roofs
+		/// </summary>
+		public const string ROOF			= "Roof";
+		/// <summary>
+		/// Sbemwall TYPE-ENV for walls
+		/// </summary>
+		public const string WALL			= "Wall";
 		/// <summary>
 		/// C# doesn't have late static binding so we need to add this to all SbemObject.
 		/// </summary>
 		public override string ObjectName() { return OBJECT_NAME; }
-		public readonly SbemObjectSet<SbemWindow> Windows = new SbemObjectSet<SbemWindow>();
-		public readonly SbemObjectSet<SbemDoor> Doors = new SbemObjectSet<SbemDoor>();
-		private float _area = 0f;
-		private float _windowArea = 0f;
-		private bool _gotArea = false;
-		public SbemConstruction Construction { get; protected set; }
-		public SbemWall(string currentName, List<string> currentProperties) : base(currentName, currentProperties)
-		{
-
+		/// <summary>
+		/// The windows embedded in this wall
+		/// </summary>
+		public readonly SbemObjectSet<SbemWindow> Windows	= new SbemObjectSet<SbemWindow>();
+		/// <summary>
+		/// The doors embedded in this wall
+		/// </summary>
+		public readonly SbemObjectSet<SbemDoor> Doors		= new SbemObjectSet<SbemDoor>();
+		
+		private float _area									= 0f;
+		private float _windowArea							= 0f;
+		private float _doorArea								= 0f;
+		private bool _gotArea								= false;
+		public override float Area { get
+			{
+				if (!_gotArea)
+					return GetArea();
+				return _area;
+			}
+			protected set { _area = value; }
 		}
+		public SbemConstruction Construction { get; protected set; }
+		public SbemWall(string currentName, List<string> currentProperties) : base(currentName, currentProperties) {}
 		public void SetConstruction(SbemConstruction construction)
 		{
 			Construction = construction;
 		}
+		/// <summary>
+		/// Get the wall Area including glazing and doors
+		/// </summary>
+		/// <returns></returns>
 		public float GetArea()
 		{
 			if (_gotArea)
@@ -57,7 +86,8 @@ namespace MeesSDK.Sbem
 			// Accumulate window area
 			for (int i = 0; i < Windows.Objects.Count; i++)
 				_windowArea += Windows.Objects[i].Area;
-
+			for (int i = 0; i < Doors.Objects.Count; i++)
+				_windowArea += Windows.Objects[i].Area;
 			float baseArea = GetNumericProperty("AREA").Value;
 
 			if (HasNumericProperty("MULTIPLIER"))
@@ -73,17 +103,35 @@ namespace MeesSDK.Sbem
 			_gotArea = true;
 			return _area;
 		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public float SurfaceArea { get => Area - _windowArea;}
+		public string Type { get { return StringProperties["TYPE"].Value; } }
 
-		public float SurfaceArea()
-		{
-			return Area - _windowArea;
-		}
-
+		public string TypeEnvironment { get { return StringProperties["TYPE-ENV"].Value; } }
+		/// <summary>
+		/// Is this an external wall? Normal or heavy ventilation
+		/// </summary>
+		public bool IsExternalWall { get { return Type == EXTERIOR_WALL && TypeEnvironment == WALL; } }
+		/// <summary>
+		/// Is this a roof?
+		/// </summary>
+		public bool IsRoof { get { return TypeEnvironment == ROOF; } }
+		/// <summary>
+		/// Get the total glazing area
+		/// </summary>
+		/// <returns></returns>
 		public float WindowArea()
 		{
 			GetArea(); // ensure it's calculated
 			return _windowArea;
 		}
+		/// <summary>
+		/// Convert to SBEM-OBJECT formatted string
+		/// </summary>
+		/// <returns></returns>
 		public string ToString()
 		{
 			StringBuilder sb = new StringBuilder();

@@ -9,7 +9,7 @@ namespace MeesSDK.Sbem.Retrofitting.Measures
 	/// <summary>
 	/// Example boiler replacement Retrofit
 	/// </summary>
-	public class NCMHeating1Example : RetrofitBase<SbemHvacSystem>
+	public class NCMHeating1Example : RetrofitBase
 	{
 		public const float CUTOFF_SEFF = 0.85f;
 		public NCMHeating1Example(SbemModel model) : base(model) { }

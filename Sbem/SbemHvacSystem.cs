@@ -35,6 +35,7 @@ namespace MeesSDK.Sbem
 	//	..
 	public class SbemHvacSystem : SbemSpatialObject
 	{
+		public HvacSystemType SystemType { get => HvacSystemType.DICTIONARY[HvacType]; }
 		/*
 		 *  HVAC Type and Heat Source constants.
 		 */
@@ -77,36 +78,36 @@ namespace MeesSDK.Sbem
 		/// <param name="value"></param>
 		/// <returns></returns>
 		public bool TypeIs(string value) =>	GetStringProperty("TYPE").Value == value;
-		public bool IsNoHeatingOrCooling() => TypeIs(NO_HEATING_OR_COOLING);
-		public bool IsCentralWaterRadiators() => TypeIs(CENTRAL_WATER_RADIATORS);
-		public bool IsCentralWaterConvectors() => TypeIs(CENTRAL_WATER_CONVECTORS);
-		public bool IsCentralWaterFloorHeating() => TypeIs(CENTRAL_WATER_FLOOR_HEATING);
-		public bool IsCentralAirDistribution() => TypeIs(CENTRAL_AIR_DISTRIBUTION);
-		public bool IsRoomHeaterFanned() => TypeIs(ROOM_HEATER_FANNED);
-		public bool IsRadiantHeaterUnflued() => TypeIs(RADIANT_HEATER_UNFLUED);
-		public bool IsRadiantHeaterFlued() => TypeIs(RADIANT_HEATER_FLUED);
-		public bool IsRadiantHeatersMultiburner() => TypeIs(RADIANT_HEATERS_MULTIBURNER);
-		public bool IsAirHeaterFluedForced() => TypeIs(AIR_HEATER_FLUED_FORCED);
-		public bool IsAirHeaterUnfluedForced() => TypeIs(AIR_HEATER_UNFLUED_FORCED);
-		public bool IsVavSingleDuct() => TypeIs(VAV_SINGLE_DUCT);
-		public bool IsVavDualDuct() => TypeIs(VAV_DUAL_DUCT);
-		public bool IsCabinetIndoorPackaged() => TypeIs(CABINET_INDOOR_PACKAGED);
-		public bool IsFanCoilSystems() => TypeIs(FAN_COIL_SYSTEMS);
-		public bool IsInductionSystem() => TypeIs(INDUCTION_SYSTEM);
-		public bool IsVolumeFixedAir() => TypeIs(VOLUME_FIXED_AIR);
-		public bool IsVolumeVariableAir() => TypeIs(VOLUME_VARIABLE_AIR);
-		public bool IsMultizoneHotCold() => TypeIs(MULTIZONE_HOT_COLD);
-		public bool IsTerminalReheat() => TypeIs(TERMINAL_REHEAT);
-		public bool IsDualDuctConstant() => TypeIs(DUAL_DUCT_CONSTANT);
-		public bool IsChilledDispVent() => TypeIs(CHILLED_DISP_VENT);
-		public bool IsChilledBeamsActive() => TypeIs(CHILLED_BEAMS_ACTIVE);
-		public bool IsWaterLoopHeatPump() => TypeIs(WATER_LOOP_HEAT_PUMP);
-		public bool IsVariableRefrigerantFlow() => TypeIs(VARIABLE_REFRIGERANT_FLOW);
-		public bool IsSplitSystem() => TypeIs(SPLIT_SYSTEM);
-		public bool IsSplitSystemVent() => TypeIs(SPLIT_SYSTEM_VENT);
-		public bool IsSingleRoomCooling() => TypeIs(SINGLE_ROOM_COOLING);
-		public bool IsRoomHeaterUnfanned() => TypeIs(ROOM_HEATER_UNFANNED);
-		public bool IsChilledMixVent() => TypeIs(CHILLED_MIX_VENT);
+		public bool IsNoHeatingOrCooling => TypeIs(NO_HEATING_OR_COOLING);
+		public bool IsCentralWaterRadiators => TypeIs(CENTRAL_WATER_RADIATORS);
+		public bool IsCentralWaterConvectors => TypeIs(CENTRAL_WATER_CONVECTORS);
+		public bool IsCentralWaterFloorHeating => TypeIs(CENTRAL_WATER_FLOOR_HEATING);
+		public bool IsCentralAirDistribution => TypeIs(CENTRAL_AIR_DISTRIBUTION);
+		public bool IsRoomHeaterFanned => TypeIs(ROOM_HEATER_FANNED);
+		public bool IsRadiantHeaterUnflued => TypeIs(RADIANT_HEATER_UNFLUED);
+		public bool IsRadiantHeaterFlued => TypeIs(RADIANT_HEATER_FLUED);
+		public bool IsRadiantHeatersMultiburner => TypeIs(RADIANT_HEATERS_MULTIBURNER);
+		public bool IsAirHeaterFluedForced => TypeIs(AIR_HEATER_FLUED_FORCED);
+		public bool IsAirHeaterUnfluedForced => TypeIs(AIR_HEATER_UNFLUED_FORCED);
+		public bool IsVavSingleDuct => TypeIs(VAV_SINGLE_DUCT);
+		public bool IsVavDualDuct => TypeIs(VAV_DUAL_DUCT);
+		public bool IsCabinetIndoorPackaged => TypeIs(CABINET_INDOOR_PACKAGED);
+		public bool IsFanCoilSystems => TypeIs(FAN_COIL_SYSTEMS);
+		public bool IsInductionSystem => TypeIs(INDUCTION_SYSTEM);
+		public bool IsVolumeFixedAir => TypeIs(VOLUME_FIXED_AIR);
+		public bool IsVolumeVariableAir => TypeIs(VOLUME_VARIABLE_AIR);
+		public bool IsMultizoneHotCold => TypeIs(MULTIZONE_HOT_COLD);
+		public bool IsTerminalReheat => TypeIs(TERMINAL_REHEAT);
+		public bool IsDualDuctConstant => TypeIs(DUAL_DUCT_CONSTANT);
+		public bool IsChilledDispVent => TypeIs(CHILLED_DISP_VENT);
+		public bool IsChilledBeamsActive => TypeIs(CHILLED_BEAMS_ACTIVE);
+		public bool IsWaterLoopHeatPump => TypeIs(WATER_LOOP_HEAT_PUMP);
+		public bool IsVariableRefrigerantFlow => TypeIs(VARIABLE_REFRIGERANT_FLOW);
+		public bool IsSplitSystem => TypeIs(SPLIT_SYSTEM);
+		public bool IsSplitSystemVent => TypeIs(SPLIT_SYSTEM_VENT);
+		public bool IsSingleRoomCooling => TypeIs(SINGLE_ROOM_COOLING);
+		public bool IsRoomHeaterUnfanned => TypeIs(ROOM_HEATER_UNFANNED);
+		public bool IsChilledMixVent => TypeIs(CHILLED_MIX_VENT);
 
 
 		// Heat Source
@@ -133,24 +134,24 @@ namespace MeesSDK.Sbem
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		public bool HeatSourceIs(string value) =>	HasStringProperty("HEAT-SOURCE") && GetStringProperty("HEAT-SOURCE").Value == value;
-		public bool IsLthwBoiler() => HeatSourceIs(LTHW_BOILER);
-		public bool IsMthwBoiler() => HeatSourceIs(MTHW_BOILER);
-		public bool IsHthwBoiler() => HeatSourceIs(HTHW_BOILER);
-		public bool IsAirHeater() => HeatSourceIs(AIR_HEATER);
-		public bool IsUnfluedGasWarmAirHeater() => HeatSourceIs(UNFLUED_GAS_WARM_AIR_HEATER);
-		public bool IsUnitaryRadiantHeater() => HeatSourceIs(UNITARY_RADIANT_HEATER);
-		public bool IsRadiantHeater() => HeatSourceIs(RADIANT_HEATER);
-		public bool IsUnfluedRadiantHeater() => HeatSourceIs(UNFLUED_RADIANT_HEATER);
-		public bool IsDirectOrStorageElectricHeater() => HeatSourceIs(DIRECT_OR_STORAGE_ELECTRIC_HEATER);
-		public bool IsHeatPumpGasOilAirSource() => HeatSourceIs(HEAT_PUMP_GAS_OIL_AIR_SOURCE);
-		public bool IsHeatPumpGasOilGroundOrWaterSource() => HeatSourceIs(HEAT_PUMP_GAS_OIL_GROUND_OR_WATER_SOURCE);
-		public bool IsRoomHeater() => HeatSourceIs(ROOM_HEATER);
-		public bool IsDistrictHeating() => HeatSourceIs(DISTRICT_HEATING);
-		public bool IsChp() => HeatSourceIs(CHP);
-		public bool IsDirectGasFiring() => HeatSourceIs(DIRECT_GAS_FIRING);
-		public bool IsHeatPumpElectricAirSource() => HeatSourceIs(HEAT_PUMP_ELECTRIC_AIR_SOURCE);
-		public bool IsHeatPumpElectricGroundOrWaterSource() => HeatSourceIs(HEAT_PUMP_ELECTRIC_GROUND_OR_WATER_SOURCE);
+		public bool HeatSourceIs(string value) => HasStringProperty("HEAT-SOURCE") && GetStringProperty("HEAT-SOURCE").Value == value;
+		public bool IsLTHWBoiler => HeatSourceIs(LTHW_BOILER);
+		public bool IsMTHWBoiler => HeatSourceIs(MTHW_BOILER);
+		public bool IsHTHWBoiler => HeatSourceIs(HTHW_BOILER);
+		public bool IsAirHeater => HeatSourceIs(AIR_HEATER);
+		public bool IsUnfluedGasWarmAirHeater => HeatSourceIs(UNFLUED_GAS_WARM_AIR_HEATER);
+		public bool IsUnitaryRadiantHeater => HeatSourceIs(UNITARY_RADIANT_HEATER);
+		public bool IsRadiantHeater => HeatSourceIs(RADIANT_HEATER);
+		public bool IsUnfluedRadiantHeater => HeatSourceIs(UNFLUED_RADIANT_HEATER);
+		public bool IsDirectOrStorageElectricHeater => HeatSourceIs(DIRECT_OR_STORAGE_ELECTRIC_HEATER);
+		public bool IsHeatPumpGasOilAirSource => HeatSourceIs(HEAT_PUMP_GAS_OIL_AIR_SOURCE);
+		public bool IsHeatPumpGasOilGroundOrWaterSource => HeatSourceIs(HEAT_PUMP_GAS_OIL_GROUND_OR_WATER_SOURCE);
+		public bool IsRoomHeater => HeatSourceIs(ROOM_HEATER);
+		public bool IsDistrictHeating => HeatSourceIs(DISTRICT_HEATING);
+		public bool IsChp => HeatSourceIs(CHP);
+		public bool IsDirectGasFiring => HeatSourceIs(DIRECT_GAS_FIRING);
+		public bool IsHeatPumpElectricAirSource => HeatSourceIs(HEAT_PUMP_ELECTRIC_AIR_SOURCE);
+		public bool IsHeatPumpElectricGroundOrWaterSource => HeatSourceIs(HEAT_PUMP_ELECTRIC_GROUND_OR_WATER_SOURCE);
 		/// <summary>
 		/// SBEM Inp object name. All SBEM objects have one. 
 		/// </summary>
@@ -159,9 +160,16 @@ namespace MeesSDK.Sbem
 		public SbemObjectSet<SbemZone> Zones { get; protected set; } = new SbemObjectSet<SbemZone>();
 		public ConsumerConsumptionCalendar EndUseConsumerCalendar { get; protected set; }
 		public FuelConsumptionCalendar FuelUseConsumerCalendar { get; protected set; }
+		public HvacSystemType TypeData { get; protected set; }
+		public string HvacType { get => GetStringProperty("TYPE").Value; }
+		public string HeatSource { get => GetStringProperty("HEAT-SOURCE").Value; }
+		public bool HasCooling { get => TypeData.HasCooling; }
+		public bool HashHeating { get => TypeData.HasHeating; }
+		public bool HasMechanicalVentilation{ get => TypeData.HasMechanicalVentilation; }
+
 		public SbemHvacSystem(string currentName, List<string> currentProperties) : base(currentName, currentProperties)
 		{
-
+			TypeData    = HvacSystemType.DICTIONARY[HvacType];
 		}
 		public void SetEndUseConsumerCalendar(ConsumerConsumptionCalendar endUseConsumerCalendar)
 		{

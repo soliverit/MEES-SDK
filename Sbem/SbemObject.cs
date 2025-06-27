@@ -1,4 +1,5 @@
-﻿using MathNet.Numerics.Statistics;
+﻿using MathNet.Numerics;
+using MathNet.Numerics.Statistics;
 using MeesSDK.DataManagement;
 using System;
 using System.Collections.Generic;
@@ -224,6 +225,92 @@ namespace MeesSDK.Sbem
 		/// <returns></returns>
 		public bool HasStringProperty(string key) {return StringProperties.ContainsKey(key); }
 		/// <summary>
+		/// Does a string property exist and is its value the same as the input?
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public bool PropertyEquals(string key, string value)
+		{
+			return HasStringProperty(key) && StringProperties[key].Value == value;
+		}
+		/// <summary>
+		/// 
+		/// Does a numeric property exist and is its value the same as the input?
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public bool PropertyEquals(string key, float value)
+		{
+			return HasNumericProperty(key) && NumericProperties[key].Value == value;
+		}
+		/// <summary>
+		/// Does a numeric property exist and is its rounded value equal the input?
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public bool PropertyEquals(string key, int value)
+		{
+			return HasNumericProperty(key) && NumericProperties[key].Value.Round(0) == value;
+		}
+		public bool PropertyLessThan(string key, float value)
+		{
+			return HasNumericProperty(key) && NumericProperties[key].Value < value;
+		}
+		public bool PropertyGreaterThan(string key, float value)
+		{
+			return HasNumericProperty(key) && NumericProperties[key].Value > value;
+		}
+		/// <summary>
+		/// Is a string property value in the input array
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="values"></param>
+		/// <returns></returns>
+		public bool PropertyValueIn(string key, string[] values)
+		{
+			if(!HasStringProperty(key)) 
+				return false;
+			for (int valueID = 0; valueID < values.Length; valueID++)
+				if (StringProperties[key].Value == values[valueID])
+					return true;
+			return false;
+		}
+		/// <summary>
+		/// Is a numeric property value in the input array
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="values"></param>
+		/// <returns></returns>
+		public bool PropertyValueIn(string key, float[] values)
+		{
+			if (!HasNumericProperty(key))
+				return false;
+			for (int valueID = 0; valueID < values.Length; valueID++)
+				if (NumericProperties[key].Value == values[valueID])
+					return true;
+			return false;
+		}
+		/// <summary>
+		/// Rounded Property value is in integer array.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="values"></param>
+		/// <returns></returns>
+		public bool PropertyValueIn(string key, int[] values)
+		{
+			if (!HasNumericProperty(key))
+				return false;
+			int numericValue	= (int) NumericProperties[key].Value.Round(0);
+			for (int valueID = 0; valueID < values.Length; valueID++)
+				if (numericValue == values[valueID])
+					return true;
+			return false;
+		}
+
+		/// <summary>
 		/// Convert the object into an SBEM .inp model format E.g.
 		/// <para>"SBEM" = COMPLIANCE</para>
 		///	<para>	EPC-TYPE            = EPC England</para>
@@ -236,10 +323,18 @@ namespace MeesSDK.Sbem
 		{
 			StringProperties.Remove(propertyName);
 		}
+		/// <summary>
+		/// Remove a numeric property
+		/// </summary>
+		/// <param name="propertyName"></param>
 		public void RemoveNumericProperty(string propertyName)
 		{
 			NumericProperties.Remove(propertyName);
 		}
+		/// <summary>
+		/// Convert to .inp SBEM object format string
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			StringBuilder sb = new StringBuilder();
