@@ -46,14 +46,14 @@ namespace MeesSDK.Examples.Sbem
 		public override string GetDescription()
 		{
 			return @""" 
-Lighting Retrofit:
+Lighting RetrofitStruct:
 
 	We want to see how efficient our building would be if T8 lamps, halphosphate / triphosphor and 
 	low- / high-efficiency ballasts, were replaced with LEDs at 60lm/W.
 
 1: Load the SbemModel
 2: Prepare and run the Retorift
-3: Get Retrofit results
+3: Get RetrofitStruct results
 4: Get the consumption difference SbemModel
 """;
 		}

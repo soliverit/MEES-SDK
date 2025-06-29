@@ -13,7 +13,12 @@ namespace MeesSDK.Sbem.Retrofitting.Measures
 		/// Maximum leakage before EPC-C3 is triggered. See SBEM technical manual
 		/// B2.3.2.2 Duct and AHU leakage
 		/// </summary>
-		public const float LEAKAGE_CUT_OFF		= 10;
+		public const float LEAKAGE_CUT_OFF			= 10;
+		/// <summary>
+		/// The associated EPC/Measure code. E.g EPC-L5 for T8 lamp replacement. 
+		/// Codes taken from the SBEM technical manual where possible.
+		/// </summary>
+		public const string MEASURE_REFERENCE_CODE	= "EPC-C3";
 		/// <summary>
 		/// Assumed leakage percent after sealing. See SBEM technical manual 
 		/// B2.3.2.2 Duct and AHU leakage

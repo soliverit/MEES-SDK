@@ -11,6 +11,14 @@ namespace MeesSDK.Sbem.Retrofitting.Measures
 	/// </summary>
 	public class NCMHeating1Example : RetrofitBase
 	{
+		/// <summary>
+		/// The associated EPC/Measure code. E.g EPC-L5 for T8 lamp replacement. 
+		/// Codes taken from the SBEM technical manual where possible.
+		/// </summary>
+		public const string MEASURE_REFERENCE_CODE = "EPC-H1";
+		/// <summary>
+		/// The minimum acceptable system efficiency
+		/// </summary>
 		public const float CUTOFF_SEFF = 0.85f;
 		public NCMHeating1Example(SbemModel model) : base(model) { }
 		public override void Apply()

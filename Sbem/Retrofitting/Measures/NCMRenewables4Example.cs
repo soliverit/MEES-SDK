@@ -4,6 +4,11 @@ namespace MeesSDK.Sbem.Retrofitting.Measures
 	public class NCMRenewables4Example : RetrofitBase
 	{
 		/// <summary>
+		/// The associated EPC/Measure code. E.g EPC-L5 for T8 lamp replacement. 
+		/// Codes taken from the SBEM technical manual where possible.
+		/// </summary>
+		public const string MEASURE_REFERENCE_CODE = "EPC-R4";
+		/// <summary>
 		/// The percentage of roof area to be covered
 		/// </summary>
 		public const float PERCENT_COVERAGE = 0.4f;

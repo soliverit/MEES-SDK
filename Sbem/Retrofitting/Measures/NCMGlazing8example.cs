@@ -9,6 +9,11 @@ namespace MeesSDK.Sbem.Retrofitting.Measures
 	internal class NCMGlazing8example : RetrofitBase
 	{
 		/// <summary>
+		/// The associated EPC/Measure code. E.g EPC-L5 for T8 lamp replacement. 
+		/// Codes taken from the SBEM technical manual where possible.
+		/// </summary>
+		public const string MEASURE_REFERENCE_CODE = "EPC-E8";
+		/// <summary>
 		/// The default constructor
 		/// </summary>
 		/// <param name="model"></param>

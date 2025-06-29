@@ -11,13 +11,18 @@ namespace MeesSDK.Sbem.Retrofitting.Measures
 	public class NCMRoofE2Example : RetrofitBase
 	{
 		/// <summary>
+		/// The associated EPC/Measure code. E.g EPC-L5 for T8 lamp replacement. 
+		/// Codes taken from the SBEM technical manual where possible.
+		/// </summary>
+		public const string MEASURE_REFERENCE_CODE	= "EPC-E2";
+		/// <summary>
 		/// The maximum U-Value allowed before wall insulation is required. Se. 
 		/// </summary>
-		public const float U_VALUE_THRESHOLD = 0.7f;
+		public const float U_VALUE_THRESHOLD		= 0.7f;
 		/// <summary>
 		/// The replacement U-Value. Table 4.2 Part L2. Limiting U-Values
 		/// </summary>
-		public const float L2_MAX_RETROFIT_U_VALUE = 0.3f;
+		public const float L2_MAX_RETROFIT_U_VALUE	= 0.3f;
 		public NCMRoofE2Example(SbemModel model) : base(model) { }
 		public override void Apply()
 		{
@@ -28,7 +33,7 @@ namespace MeesSDK.Sbem.Retrofitting.Measures
 				// Skip constructions that aren't for external walls or whose U-Value is under the threshhold
 				if (!construction.IsRoof || construction.GetNumericProperty("U-VALUE").Value > U_VALUE_THRESHOLD)
 					continue;
-				// Apply the retorift
+				// Apply the retrofit
 				construction.SetNumericProperty("U-VALUE", L2_MAX_RETROFIT_U_VALUE);
 				// Track the changes
 				AddModifiedObject(construction);

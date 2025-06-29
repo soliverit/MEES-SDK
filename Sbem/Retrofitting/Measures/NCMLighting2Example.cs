@@ -10,6 +10,11 @@ namespace MeesSDK.Sbem.Retrofitting.Measures
 	{
 		public NCMLighting2Example(SbemModel sbemModel) : base(sbemModel) { }
 		/// <summary>
+		/// The associated EPC/Measure code. E.g EPC-L5 for T8 lamp replacement. 
+		/// Codes taken from the SBEM technical manual where possible.
+		/// </summary>
+		public const string MEASURE_REFERENCE_CODE = "EPC-L2";
+		/// <summary>
 		/// Apply the retrofit, track the modified objects.
 		/// </summary>
 		public override void Apply()

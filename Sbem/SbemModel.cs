@@ -208,17 +208,17 @@ AIR-CON-INSTALLED = No
 		using var reader = new StringReader(content);
 
 		string line;
-		string currentName = null;
-		string currentType = null;
-		var currentProperties = new List<string>();
-		bool inObject = false;
+		string currentName;
+		string currentType;
+		var currentProperties		= new List<string>();
+		bool inObject				= false;
 
-		SbemDoor currentDoor = null;
-		SbemHvacSystem currentHvac = null;
-		SbemWall currentWall = null;
-		SbemWindow currentWindow = null;
-		SbemZone currentZone = null;
-		int lineNumber = 0;
+		SbemDoor currentDoor;
+		SbemHvacSystem currentHvac;
+		SbemWall currentWall;
+		SbemWindow currentWindow;
+		SbemZone currentZone;
+		int lineNumber				= 0;
 		while ((line = reader.ReadLine()) != null)
 		{
 			lineNumber++;
@@ -437,6 +437,32 @@ AIR-CON-INSTALLED = No
 			content.AppendLine(improvementMeasure.ToString());
 		return content.ToString();
 	}
+	public SbemModelSet GetHVACModels()
+	{
+
+	}
+	public SbemModelSet GetZoneModels()
+	{
+		SbemModelSet models	= new SbemModelSet();
+
+		SbemModel tempModel;   
+		for(int hvacID = 0; hvacID < Zones.Length; hvacID++)
+		{
+			tempModel						= ParseInpContent(ToString());
+			SbemHvacSystem hvac				= tempModel.HvacSystems[HvacSystems[hvacID].Name];
+			tempModel.HvacSystems.Clear();
+			tempModel.HvacSystems.Add(hvac);
+			SbemObjectSet<SbemZone> zones	= hvac.Zones.Copy();
+			for(int zoneID = 0;  zoneID < zones.Length; zoneID++)
+			{
+				SbemZone zone = zones[zoneID];
+				hvac.Zones.Clear();
+				hvac.Zones.Add(zone);
+				models.AddModel(SbemModel.ParseInpContent(tempModel.ToString()));
+			}
+		}
+		return models;
+	}
 	/// <summary>
 	/// Clone this SbemModel
 	/// </summary>
@@ -500,7 +526,6 @@ AIR-CON-INSTALLED = No
 					(hvac.HasNumericProperty("SFP") ? hvac.NumericProperties["SFP"].Value.ToString() : "NA"),
 				});
 			table.Add(new List<string>() { });
-
 		}
 		PHelper.PrintTable(table);
 	}

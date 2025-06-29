@@ -1,17 +1,7 @@
-﻿using CsvHelper;
-using GeneticSharp;
-using MathNet.Numerics.Optimization;
-using MeesSDK.Chromosome;
-using MeesSDK.DataManagement;
-using MeesSDK.ML;
+﻿
 using MeesSDK.Sbem;
-using MeesSDK.Sbem.Retrofitting.Measures;
-using System.Diagnostics;
-using MeesSDK.Examples.RdSAP;
 using MeesSDK.Examples.Sbem;
 using MeesSDK.Examples;
-using Npgsql.Replication.PgOutput.Messages;
-using Microsoft.ML.Trainers.FastTree;
 /*
  *  Math.NET  
  */
@@ -42,7 +32,8 @@ MathNet.Numerics.Control.UseNativeMKL();
 string SBEM_DIRECTORY = "c:\\ncm\\6.1.e\\";
 string SBEM_TARGET_DIRECTORY = SBEM_DIRECTORY + "project\\"; ;
 SbemService sbem		= new SbemService(SBEM_DIRECTORY, SBEM_TARGET_DIRECTORY);
-SbemProject project		= SbemProject.BuildFromDirectory("C:\\workspaces\\__shared_data__\\graham_hill\\");
+SbemProject project = sbem.BuildProject(SbemModel.ParseInpFile("C:\\workspaces\\__shared_data__\\graham_hill\\model.inp"));
+return;
 IMeesSDKExample example = new SbemOccupancyCorrection(project, sbem);
 example.RunTheExample();
 //

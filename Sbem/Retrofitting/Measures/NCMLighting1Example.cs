@@ -10,6 +10,11 @@ namespace MeesSDK.Sbem.Retrofitting.Measures
 {
 	public class NCMLighting1Example : RetrofitBase
 	{
+		/// <summary>
+		/// The associated EPC/Measure code. E.g EPC-L5 for T8 lamp replacement. 
+		/// Codes taken from the SBEM technical manual where possible.
+		/// </summary>
+		public const string MEASURE_REFERENCE_CODE = "EPC-L1";
 		public NCMLighting1Example(SbemModel sbemModel) : base(sbemModel) { }
 		/// <summary>
 		/// The SbemZone LIGHT-TYPE keyword for T12 lamps
